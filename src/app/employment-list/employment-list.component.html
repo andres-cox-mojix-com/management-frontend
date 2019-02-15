@@ -1,0 +1,32 @@
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Charge</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="cursor: pointer;" *ngFor="let employee of employees">
+          <!-- <th scope="row">{{i}}</th> -->
+          <td>
+            <a >
+              {{ employee.name }}</a>
+          </td>
+          <td>
+            <a >
+              {{ employee.lastname }}
+            </a>
+          </td>
+          <td>
+            <a >
+              {{ employee.charge }}
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
