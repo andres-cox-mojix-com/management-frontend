@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Employee } from '../shared/employee.model';
 import { EmployeeService } from '../shared/employee.service';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './employment-list.component.html',
   styleUrls: ['./employment-list.component.css']
 })
-export class EmploymentListComponent implements OnInit {
+export class EmploymentListComponent implements OnInit, OnDestroy {
   employees: Employee[];
 
   private subscription: Subscription;
@@ -23,5 +23,12 @@ export class EmploymentListComponent implements OnInit {
       }
     );
   }
+  onEditUser( index: number){
+    this.employeeService.startedEditing.next(index);
+    
+  }
 
+  ngOnDestroy(){
+    this.subscription.unsubscribe();
+  }
 }

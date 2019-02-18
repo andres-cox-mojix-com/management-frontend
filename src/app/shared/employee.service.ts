@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 
 export class EmployeeService {
   employeeChanged = new Subject<Employee[]>();
+  startedEditing = new Subject<number>();
 
   private employees: Employee[]=[
     new Employee('Juan', 'Delgado', 'Lawyer'),
@@ -17,4 +18,8 @@ export class EmployeeService {
     this.employees.push(employee);
     this.employeeChanged.next(this.employees.slice());
   }
+  removeEmployee(){
+    
+  }
+
 }

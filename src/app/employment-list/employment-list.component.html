@@ -3,14 +3,18 @@
     <table class="table table-hover">
       <thead>
         <tr>
+          <th scope="col">#</th>
           <th scope="col">First</th>
           <th scope="col">Last</th>
           <th scope="col">Charge</th>
         </tr>
       </thead>
       <tbody>
-        <tr style="cursor: pointer;" *ngFor="let employee of employees">
-          <!-- <th scope="row">{{i}}</th> -->
+        <tr
+          style="cursor: pointer;"
+          *ngFor="let employee of employees; let i = index;"
+          (click)="onEditUser(i)" >
+          <th scope="row">{{i + 1}}</th>
           <td>
             <a >
               {{ employee.name }}</a>

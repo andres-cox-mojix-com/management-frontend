@@ -38,18 +38,19 @@
       </div>
       <div class="row">
         <div class="btn-group col-xs-12 col-sm-12">
-          <button class="btn btn-success" type="submit">Add</button>
+          <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Add</button>
+          <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="editMode" >Delete</button>
         </div>
       </div>
     </form>
   </div>
-  <div class="row" *ngIf="submitted" >
+  <!-- VIEW USER DATA ON SUBMIT -->
+  <!-- <div class="row" *ngIf="submitted" >
     <div class="col-xs-12">
       <h3>Your Data</h3>
       <p>Employee Name: {{ employeeUser.name }}</p>
       <p>Employ Lastname: {{ employeeUser.lastname }}</p>
       <p>Charge: {{ employeeUser.charge }}</p>
-
     </div>
-  </div>
+  </div> -->
 </div>
