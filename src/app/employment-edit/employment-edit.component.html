@@ -1,11 +1,7 @@
 <h2 class="bd-title" style="padding-top: 20px;">Setup</h2>
 <div class="row">
   <div class=" col-xs-12 col-sm-10 col-md-9 col-sm-offset-1 col-md-offset-2 ">
-    <form
-      [formGroup]="registerForm"
-      (ngSubmit)="onSubmit()"
-      autocomplete="off"
-    >
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
       <div class="row ">
         <div class="col-sm-12 form-group">
           <label for="name">Name:</label>
@@ -22,10 +18,7 @@
             "
             class="text-muted"
           >
-            <small
-              *ngIf="registerForm.get('name').errors['required']"
-
-            >
+            <small *ngIf="registerForm.get('name').errors['required']">
               This Field is Required
             </small>
           </span>
@@ -47,49 +40,50 @@
             "
             class="text-muted"
           >
-            <small
-              *ngIf="registerForm.get('lastname').errors['required']"
-
-            >
+            <small *ngIf="registerForm.get('lastname').errors['required']">
               This Field is Required
             </small>
           </span>
         </div>
       </div>
       <div class="row">
-          <div class="col-sm-12 form-group">
-            <label for="ciNumber">CI:</label>
-            <input
-              type="number"
-              id="ciNumber"
-              class="form-control"
-              formControlName="ciNumber"
-            />
-            <span
-              *ngIf="
-                !registerForm.get('ciNumber').valid &&
-                registerForm.get('ciNumber').touched
-              "
-              class="text-muted"
-            >
-              <small
-                *ngIf="registerForm.get('ciNumber').errors['required']"
-
-              >
-                This Field is Required
-              </small>
-            </span>
-          </div>
+        <div class="col-sm-12 form-group">
+          <label for="ciNumber">CI:</label>
+          <input
+            type="number"
+            id="ciNumber"
+            class="form-control"
+            formControlName="ciNumber"
+          />
+          <span
+            *ngIf="
+              !registerForm.get('ciNumber').valid &&
+              registerForm.get('ciNumber').touched
+            "
+            class="text-muted"
+          >
+            <small *ngIf="registerForm.get('ciNumber').errors['required']">
+              This Field is Required
+            </small>
+          </span>
         </div>
+      </div>
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="charge">Charge:</label>
-          <input
+          <!-- <input
             type="text"
             id="charge"
             class="form-control"
             formControlName="charge"
-          />
+          /> -->
+          <select id="charge" class="form-control" formControlName="charge">
+            <option value="Accountant">Accountant</option>
+            <option value="Economist">Economist</option>
+            <option value="Engineer">Engineer</option>
+            <option value="Programmer">Programmer</option>
+            <option value="Photographer">Photographer</option>
+          </select>
           <span
             *ngIf="
               !registerForm.get('charge').valid &&
@@ -97,10 +91,7 @@
             "
             class="text-muted"
           >
-            <small
-              *ngIf="registerForm.get('charge').errors['required']"
-
-            >
+            <small *ngIf="registerForm.get('charge').errors['required']">
               This Field is Required
             </small>
           </span>
@@ -117,7 +108,7 @@
             type="submit"
             [disabled]="!registerForm.valid"
           >
-          {{ editMode ? 'Update' : 'Add'}}
+            {{ editMode ? "Update" : "Add" }}
           </button>
           <button class="btn btn-primary" type="button" (click)="onClear()">
             Clear
