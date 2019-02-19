@@ -1,45 +1,111 @@
+<h2 class="bd-title" style="padding-top: 20px;">Setup</h2>
 <div class="row">
-  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-    <form [formGroup]="registerForm" (ngSubmit)="onAddEmployee()" autocomplete="off" >
-      <div class="row">
+  <div class=" col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2 ">
+    <form
+      [formGroup]="registerForm"
+      (ngSubmit)="onSubmit()"
+      autocomplete="off"
+    >
+      <div class="row ">
         <div class="col-sm-12 form-group">
           <label for="name">Name:</label>
-          <input  type="text"
-                  id="name"
-                  class="form-control"
-                  formControlName="name"/>
+          <input
+            type="text"
+            id="name"
+            class="form-control"
+            formControlName="name"
+          />
+          <span
+            *ngIf="
+              !registerForm.get('name').valid &&
+              registerForm.get('name').touched
+            "
+            class="text-muted"
+          >
+            <small
+              *ngIf="registerForm.get('name').errors['required']"
+
+            >
+              This Field is Required
+            </small>
+          </span>
         </div>
       </div>
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="lastname">Lastname:</label>
-          <input  type="text"
-                  id="lastname"
-                  class="form-control"
-                  formControlName="lastname"/>
+          <input
+            type="text"
+            id="lastname"
+            class="form-control"
+            formControlName="lastname"
+          />
+          <span
+            *ngIf="
+              !registerForm.get('lastname').valid &&
+              registerForm.get('lastname').touched
+            "
+            class="text-muted"
+          >
+            <small
+              *ngIf="registerForm.get('lastname').errors['required']"
+
+            >
+              This Field is Required
+            </small>
+          </span>
         </div>
       </div>
+      
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="charge">Charge:</label>
-          <input  type="text"
-                  id="charge"
-                  class="form-control"
-                  formControlName="charge"/>
+          <input
+            type="text"
+            id="charge"
+            class="form-control"
+            formControlName="charge"
+          />
+          <span
+            *ngIf="
+              !registerForm.get('charge').valid &&
+              registerForm.get('charge').touched
+            "
+            class="text-muted"
+          >
+            <small
+              *ngIf="registerForm.get('charge').errors['required']"
+
+            >
+              This Field is Required
+            </small>
+          </span>
         </div>
       </div>
       <div class="form-group">
         <label for="observations">Observations:</label>
-        <textarea
-          name="notes"
-          class="form-control"
-          rows="3"
-        ></textarea>
+        <textarea name="notes" class="form-control" rows="3"></textarea>
       </div>
       <div class="row">
         <div class="btn-group col-xs-12 col-sm-12">
-          <button class="btn btn-success" type="submit" [disabled]="!registerForm.valid">Add</button>
-          <button class="btn btn-danger" type="button" (click)="onDelete()" *ngIf="editMode" >Delete</button>
+          <button
+            class="btn btn-success"
+            type="submit"
+            [disabled]="!registerForm.valid"
+          >
+          {{ editMode ? 'Update' : 'Add'}}
+          </button>
+          <button class="btn btn-primary" type="button" (click)="onClear()">
+            Clear
+          </button>
+          <button
+            class="btn btn-danger"
+            type="button"
+            (click)="onDelete()"
+            *ngIf="editMode"
+          >
+            Delete
+          </button>
         </div>
       </div>
     </form>

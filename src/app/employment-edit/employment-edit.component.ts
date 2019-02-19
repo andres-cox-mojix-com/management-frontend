@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Employee } from '../shared/employee.model';
@@ -10,9 +11,14 @@ import { EmployeeService } from '../shared/employee.service';
 })
 export class EmploymentEditComponent implements OnInit {
   registerForm: FormGroup;
-  submitted = false;
-  employeeUser: Employee;
+
+  //LOAD USER TO THE FORM
+  subscription: Subscription;
+  editedUser: Employee;
   editedUserIndex: number;
+
+  employeeUser: Employee;
+  submitted = false;
   editMode = false;
 
 
@@ -24,8 +30,22 @@ export class EmploymentEditComponent implements OnInit {
       'lastname':new FormControl(null, Validators.required),
       'charge': new FormControl(null, Validators.required)
     })
+
+    //LOAD EMPLOYEE TO THE FORM
+    this.subscription = this.employeeService.startedEditing.subscribe(
+      (index: number) => {
+        this.editedUserIndex = index;
+        this.editMode = true;
+        this.editedUser = this.employeeService.getEmployee(index);
+        this.registerForm.setValue({
+          name: this.editedUser.name,
+          lastname: this.editedUser.lastname,
+          charge: this.editedUser.charge
+        });
+      }
+    );
   }
-  onAddEmployee(){
+  onSubmit(){
     //console.log(this.registerForm);
     this.submitted=true;
 
@@ -35,10 +55,19 @@ export class EmploymentEditComponent implements OnInit {
     // const formValueCharge = this.registerForm.value.charge;
     // this.employeeUser = new Employee(formValueName, formValueLastName,formValueCharge);
 
-    this.employeeService.addEmployee(this.registerForm.value);
+    if (this.editMode) {
+      this.employeeService.updateEmployee(this.editedUserIndex, this.registerForm.value );
+    } else {
+      this.employeeService.addEmployee(this.registerForm.value);
+    }
     this.registerForm.reset();
   }
+  onClear(){
+    this.registerForm.reset();
+    this.editMode = false;
+  }
   onDelete(){
-    this.employeeService.removeEmployee();
+    this.employeeService.removeEmployee(this.editedUserIndex);
+    this.onClear();
   }
 }

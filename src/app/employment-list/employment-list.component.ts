@@ -23,9 +23,9 @@ export class EmploymentListComponent implements OnInit, OnDestroy {
       }
     );
   }
-  onEditUser( index: number){
+  onEditUser( index: number ){
     this.employeeService.startedEditing.next(index);
-    
+
   }
 
   ngOnDestroy(){
