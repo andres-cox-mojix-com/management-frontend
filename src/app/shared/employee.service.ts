@@ -6,9 +6,9 @@ export class EmployeeService {
   startedEditing = new Subject<number>();
 
   private employees: Employee[] = [
-    new Employee("Juan", "Delgado", "Lawyer"),
-    new Employee("Luciana", "Diaz", "Secretary"),
-    new Employee("Maria", "Ruiz", "Manager"),
+    new Employee("Juan", "Delgado","8420651", "Lawyer"),
+    new Employee("Luciana", "Diaz","6524553", "Secretary"),
+    new Employee("Maria", "Ruiz","17327651", "Manager"),
   ];
 
   getEmployees() {

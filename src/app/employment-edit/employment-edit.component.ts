@@ -26,6 +26,7 @@ export class EmploymentEditComponent implements OnInit {
 
   ngOnInit() {
     this.registerForm = new FormGroup({
+      'ciNumber': new FormControl(null, Validators.required),
       'name': new FormControl(null, Validators.required),
       'lastname':new FormControl(null, Validators.required),
       'charge': new FormControl(null, Validators.required)
@@ -40,6 +41,7 @@ export class EmploymentEditComponent implements OnInit {
         this.registerForm.setValue({
           name: this.editedUser.name,
           lastname: this.editedUser.lastname,
+          ciNumber: this.editedUser.ciNumber,
           charge: this.editedUser.charge
         });
       }
@@ -60,6 +62,7 @@ export class EmploymentEditComponent implements OnInit {
     } else {
       this.employeeService.addEmployee(this.registerForm.value);
     }
+    this.editMode = false;
     this.registerForm.reset();
   }
   onClear(){

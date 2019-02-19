@@ -1,32 +1,38 @@
-<h2 class="bd-title text-center" style="padding-top: 20px;">Table of Employees</h2>
+<h2 class="bd-title text-center" style="padding-top: 20px;">
+  Table of Employees
+</h2>
 <div class="row">
   <div class="col-xs-12 col-sm-12">
     <table class="table table-hover">
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
+          <th scope="col">CI</th>
+          <th scope="col">Name</th>
+          <th scope="col">Lastname</th>
           <th scope="col">Charge</th>
         </tr>
       </thead>
       <tbody>
         <tr
           style="cursor: pointer;"
-          *ngFor="let employee of employees; let i = index;"
-          (click)="onEditUser(i)" >
-          <th scope="row">{{i + 1}}</th>
+          *ngFor="let employee of employees; let i = index"
+          (click)="onEditUser(i)"
+        >
+          <th scope="row">{{ i + 1 }}</th>
           <td>
-            <a >
-              {{ employee.name }}</a>
+            <a> {{ employee.ciNumber }}</a>
           </td>
           <td>
-            <a >
+            <a> {{ employee.name }}</a>
+          </td>
+          <td>
+            <a>
               {{ employee.lastname }}
             </a>
           </td>
           <td>
-            <a >
+            <a>
               {{ employee.charge }}
             </a>
           </td>
