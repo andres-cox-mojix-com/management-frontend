@@ -62,6 +62,9 @@
             "
             class="text-muted"
           >
+            <small *ngIf="registerForm.get('ciNumber').errors['CIrepeated']">
+              This CI is Repeated
+            </small>
             <small *ngIf="registerForm.get('ciNumber').errors['required']">
               This Field is Required
             </small>
@@ -71,12 +74,6 @@
       <div class="row">
         <div class="col-sm-12 form-group">
           <label for="charge">Charge:</label>
-          <!-- <input
-            type="text"
-            id="charge"
-            class="form-control"
-            formControlName="charge"
-          /> -->
           <select id="charge" class="form-control" formControlName="charge">
             <option value="Accountant">Accountant</option>
             <option value="Economist">Economist</option>

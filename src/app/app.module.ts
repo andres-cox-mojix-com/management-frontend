@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { EmploymentEditComponent } from './employment-edit/employment-edit.component';
 import { EmploymentListComponent } from './employment-list/employment-list.component';
 
-import { ReactiveFormsModule } from '@angular/forms'
+import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { EmployeeService } from './shared/employee.service'
 
 @NgModule({
@@ -19,6 +19,7 @@ import { EmployeeService } from './shared/employee.service'
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     ReactiveFormsModule,
     AppRoutingModule
   ],

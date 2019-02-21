@@ -12,7 +12,7 @@ import { EmployeeService } from '../shared/employee.service';
 export class EmploymentEditComponent implements OnInit {
   registerForm: FormGroup;
 
-  //LOAD USER TO THE FORM
+  // LOAD USER TO THE FORM
   subscription: Subscription;
   editedUser: Employee;
   editedUserIndex: number;
@@ -22,17 +22,19 @@ export class EmploymentEditComponent implements OnInit {
   editMode = false;
 
 
+
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      'ciNumber': new FormControl(null, Validators.required),
-      'name': new FormControl(null, Validators.required),
-      'lastname':new FormControl(null, Validators.required),
-      'charge': new FormControl(null, Validators.required)
+      ciNumber: new FormControl(null, [Validators.required, this.forbbidenCIs.bind(this)]),
+      name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      lastname: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      charge: new FormControl(null, Validators.required)
+// tslint:disable-next-line: semicolon
     })
 
-    //LOAD EMPLOYEE TO THE FORM
+    // LOAD EMPLOYEE TO THE FORM
     this.subscription = this.employeeService.startedEditing.subscribe(
       (index: number) => {
         this.editedUserIndex = index;
@@ -47,9 +49,9 @@ export class EmploymentEditComponent implements OnInit {
       }
     );
   }
-  onSubmit(){
-    //console.log(this.registerForm);
-    this.submitted=true;
+  onSubmit() {
+    // console.log(this.registerForm);
+    this.submitted = true;
 
     // NOT NECESSARY FOR REACTIVE FORMS
     // const formValueName = this.registerForm.value.name;
@@ -59,18 +61,27 @@ export class EmploymentEditComponent implements OnInit {
 
     if (this.editMode) {
       this.employeeService.updateEmployee(this.editedUserIndex, this.registerForm.value );
+      this.registerForm.reset();
     } else {
       this.employeeService.addEmployee(this.registerForm.value);
     }
     this.editMode = false;
     this.registerForm.reset();
   }
-  onClear(){
+  onClear() {
     this.registerForm.reset();
     this.editMode = false;
   }
-  onDelete(){
+  onDelete() {
     this.employeeService.removeEmployee(this.editedUserIndex);
     this.onClear();
   }
+
+  forbbidenCIs(control: FormControl): {[s: string]: boolean} {
+    if (this.employeeService.getEmployeeCIs().indexOf(control.value) !== -1) {
+      return {CIrepeated: true};
+    }
+    return null;
+  }
+
 }
