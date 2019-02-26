@@ -1,8 +1,8 @@
 import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Employee } from '../shared/employee.model';
-import { EmployeeService } from '../shared/employee.service';
+import { Employee } from '../../shared/employee.model';
+import { EmployeeService } from '../../shared/employee.service';
 
 @Component({
   selector: 'app-employment-edit',
@@ -31,7 +31,6 @@ export class EmploymentEditComponent implements OnInit {
       name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       lastname: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
       charge: new FormControl(null, Validators.required)
-// tslint:disable-next-line: semicolon
     })
 
     // LOAD EMPLOYEE TO THE FORM

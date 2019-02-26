@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Employee } from "../shared/employee.model";
-import { EmployeeService } from "../shared/employee.service";
+import { Employee } from "../../shared/employee.model";
+import { EmployeeService } from "../../shared/employee.service";
 import { Subscription } from "rxjs";
 
 @Component({

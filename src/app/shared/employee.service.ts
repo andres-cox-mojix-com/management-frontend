@@ -9,13 +9,13 @@ export class EmployeeService {
 
 
   private employees: Employee[] = [
-    new Employee("Juan", "Delgado","8420651", "Lawyer"),
-    new Employee("Luciana", "Diaz","6524553", "Secretary"),
-    new Employee("Maria", "Ruiz","7844854", "Manager"),
-    new Employee("Jacinto", "Bascope","1736498", "Lawyer"),
+    new Employee("Juan", "Delgado","8420651", "Accountant"),
+    new Employee("Luciana", "Diaz","6524553", "Economist"),
+    new Employee("Maria", "Ruiz","7844854", "Photographer"),
+    new Employee("Jacinto", "Bascope","1736498", "Accountant"),
     new Employee("Elena", "Soto","6524645", "Programmer"),
     new Employee("Pedro", "Roca","10328251", "Engineer"),
-    new Employee("Carlos", "Cortez","9050651", "Lawyer"),
+    new Employee("Carlos", "Cortez","9050651", "Accountant"),
     new Employee("Julieta", "Mendoza","3004513", "Photographer"),
     new Employee("Cintia", "Jaldin","11327651", "Economist"),
   ];
@@ -29,6 +29,11 @@ export class EmployeeService {
 
   getEmployees() {
     return this.employees.slice();
+  }
+
+  setEmployees(employees: Employee[]){
+    this.employees = employees;
+    this.employeeChanged.next(this.employees.slice());
   }
 
   getEmployee(index: number) {

@@ -1,7 +1,24 @@
-<nav class="navbar navbar-dark bg-dark">
-  <div class="container justify-content-center">
-    <div class="navbar-header ">
-      <a href="#" class="navbar-brand">Employment</a>
-    </div>
+<nav class="navbar navbar-expand navbar-dark bg-dark">
+  <a class="navbar-brand" routerLink="">Employment</a>
+  <div class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active">
+        <a routerLink="customize" class="nav-link">Configure</a>
+      </li>
+    </ul>
+    <ul class="navbar-nav navbar-right">
+      <li class="nav-item" routerLinkActive="router-link-active">
+        <a [routerLink]="['/signin']" class="nav-link">Sign In</a>
+      </li>
+      <li class="nav-item" routerLinkActive="router-link-active">
+        <a [routerLink]="['/signup']" class="nav-link">Login</a>
+      </li>
+
+      <li class="nav-item" routerLinkActive="router-link-active">
+        <a style="cursor: pointer;" class="nav-link" (click)="onSaveData()">Save Data</a></li>
+      <li class="nav-item" routerLinkActive="router-link-active">
+        <a style="cursor: pointer;" class="nav-link" (click)="onFetchData()">Fetch Data</a>
+      </li>
+    </ul>
   </div>
 </nav>
