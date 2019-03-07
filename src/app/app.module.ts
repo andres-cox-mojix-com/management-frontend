@@ -10,14 +10,17 @@ import { EmploymentListComponent } from './employment/employment-list/employment
 
 import { HttpModule } from '@angular/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { EmployeeService } from './shared/employee.service';
 import { EmploymentComponent } from './employment/employment.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { EmploymentSearchComponent } from './employment/employment-search/employment-search.component';
 import { EmploymentCustomizeComponent } from './employment/employment-customize/employment-customize.component'
+
 import { DataStorageService } from './shared/data-storage.service';
+import { EmployeeService } from './shared/employee.service';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,7 @@ import { DataStorageService } from './shared/data-storage.service';
     ReactiveFormsModule,
     AppRoutingModule
   ],
-  providers: [EmployeeService, DataStorageService],
+  providers: [EmployeeService, DataStorageService, AuthService, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

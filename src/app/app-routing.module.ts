@@ -7,12 +7,13 @@ import { EmploymentListComponent } from './employment/employment-list/employment
 import { EmploymentComponent } from './employment/employment.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { EmploymentCustomizeComponent } from './employment/employment-customize/employment-customize.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const routes: Routes = [
   { path: '', component: EmploymentComponent },
   { path: 'list', component: EmploymentListComponent },
   { path: 'edit', component: EmploymentEditComponent},
-  { path: 'customize', component: EmploymentCustomizeComponent },
+  { path: 'customize', component: EmploymentCustomizeComponent, canActivate: [AuthGuard]},
   // { path: 'customize', component: CustomizeComponent,children:[
   //   { path:'showlist', component: EmploymentListComponent}
   // ]},
