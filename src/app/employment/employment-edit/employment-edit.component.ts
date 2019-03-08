@@ -1,8 +1,13 @@
-import { Subscription } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+
 import { Employee } from '../../shared/employee.model';
 import { EmployeeService } from '../../shared/employee.service';
+
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../store/app.reducers';
+import * as EmploymentActions from './../store/employment.actions';
 
 @Component({
   selector: 'app-employment-edit',
@@ -23,7 +28,8 @@ export class EmploymentEditComponent implements OnInit {
 
 
 
-  constructor(private employeeService: EmployeeService) { }
+  constructor(private employeeService: EmployeeService,
+              private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {
     this.registerForm = new FormGroup({
@@ -59,10 +65,13 @@ export class EmploymentEditComponent implements OnInit {
     // this.employeeUser = new Employee(formValueName, formValueLastName,formValueCharge);
 
     if (this.editMode) {
-      this.employeeService.updateEmployee(this.editedUserIndex, this.registerForm.value );
-      this.registerForm.reset();
+      this.store.dispatch(new EmploymentActions.UpdateEmployee({index: this.editedUserIndex, updatedEmployee: this.registerForm.value}));
+      // this.employeeService.updateEmployee(this.editedUserIndex, this.registerForm.value );
+      // this.registerForm.reset();
     } else {
-      this.employeeService.addEmployee(this.registerForm.value);
+      this.store.dispatch(new EmploymentActions.AddEmployee(this.registerForm.value));
+
+      // this.employeeService.addEmployee(this.registerForm.value);
     }
     this.editMode = false;
     this.registerForm.reset();
@@ -72,7 +81,8 @@ export class EmploymentEditComponent implements OnInit {
     this.editMode = false;
   }
   onDelete() {
-    this.employeeService.removeEmployee(this.editedUserIndex);
+    this.store.dispatch(new EmploymentActions.DeleteEmployee(this.editedUserIndex));
+    // this.employeeService.removeEmployee(this.editedUserIndex);
     this.onClear();
   }
 

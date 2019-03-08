@@ -45,9 +45,9 @@ export class EmployeeService {
     this.employees.push(employee);
     this.employeeChanged.next(this.employees.slice());
   }
-  updateEmployee(index: number, newEmployee: Employee) {
-    newEmployee.ciNumber = newEmployee.ciNumber.toString();
-    this.employees[index] = newEmployee;
+  updateEmployee(index: number, updatedEmployee: Employee) {
+    updatedEmployee.ciNumber = updatedEmployee.ciNumber.toString();
+    this.employees[index] = updatedEmployee;
     this.employeeChanged.next(this.employees.slice());
   }
   removeEmployee(index: number) {
