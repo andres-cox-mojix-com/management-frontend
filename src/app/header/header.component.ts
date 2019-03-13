@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { DataStorageService } from './../shared/data-storage.service';
-import { Response } from '@angular/http';
-import { AuthService } from '../auth/auth.service';
+
+import { Observable } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/store/state/app.state';
+import { AuthState } from './../store/state/auth.state';
+import * as AuthActions  from './../store/actions/auth.actions';
+import * as EmploymentActions from './../store/actions/employment.actions';
 
 @Component({
   selector: 'app-header',
@@ -9,27 +14,23 @@ import { AuthService } from '../auth/auth.service';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  authState: Observable<AuthState>;
 
-  constructor(  private dataStorageService: DataStorageService,
-                private authService: AuthService ) { }
+  constructor(private store: Store<AppState>) { }
 
   ngOnInit() {
-  }
-  onSaveData(){
-    this.dataStorageService.storeEmployees().subscribe(
-      (response: Response) => {
-        console.log(response);
-      }
-    );
-  }
-  onFetchData(){
-    this.dataStorageService.getEmployees();
-  }
-  onLogout(){
-    this.authService.logout();
+    this.authState = this.store.select('auth');
   }
 
-  isAuthenticated(){
-    return this.authService.isAuthenticated();
+  onSaveData(){
+    this.store.dispatch(new EmploymentActions.StoreEmployees());
+  }
+
+  onFetchData(){
+    this.store.dispatch(new EmploymentActions.FetchEmployees());
+  }
+
+  onLogout(){
+    this.store.dispatch(new AuthActions.Logout());
   }
 }

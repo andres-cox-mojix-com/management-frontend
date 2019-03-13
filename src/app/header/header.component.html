@@ -6,13 +6,13 @@
         <a
           routerLink="customize"
           class="nav-link"
-          *ngIf="isAuthenticated()"
+          *ngIf="(authState | async).authenticated"
           >Configure</a
         >
       </li>
     </ul>
     <ul class="navbar-nav navbar-right">
-      <ng-template [ngIf]="!isAuthenticated()">
+      <ng-template [ngIf]="!(authState | async).authenticated">
         <li class="nav-item" routerLinkActive="router-link-active">
           <a routerLink="/signup" class="nav-link">Sign Up</a>
           <!-- <a [routerLink]="['/signup']" class="nav-link">Sign Up</a> -->
@@ -21,7 +21,7 @@
           <a [routerLink]="['/signin']" class="nav-link">Login</a>
         </li>
       </ng-template>
-      <ng-template [ngIf]="isAuthenticated()">
+      <ng-template [ngIf]="(authState | async).authenticated">
         <li
           class="nav-item"
           routerLinkActive="router-link-active"

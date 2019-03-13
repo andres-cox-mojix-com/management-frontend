@@ -1,94 +1,96 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, Validators } from "@angular/forms";
 
-import { Employee } from '../../shared/employee.model';
-import { EmployeeService } from '../../shared/employee.service';
+import { Employee } from "../../shared/employee.model";
 
-import { Store } from '@ngrx/store';
-import * as fromApp from '../../store/app.reducers';
-import * as EmploymentActions from './../store/employment.actions';
+import { Store, select } from "@ngrx/store";
+import { AppState } from "src/app/store/state/app.state";
+import { employeesCI } from './../../store/selectors/employment.selectors';
+import * as EmploymentActions from "../../store/actions/employment.actions";
 
 @Component({
-  selector: 'app-employment-edit',
-  templateUrl: './employment-edit.component.html',
-  styleUrls: ['./employment-edit.component.css']
+  selector: "app-employment-edit",
+  templateUrl: "./employment-edit.component.html",
+  styleUrls: ["./employment-edit.component.css"]
 })
 export class EmploymentEditComponent implements OnInit {
   registerForm: FormGroup;
-
-  // LOAD USER TO THE FORM
-  subscription: Subscription;
   editedUser: Employee;
   editedUserIndex: number;
-
-  employeeUser: Employee;
-  submitted = false;
   editMode = false;
 
-
-
-  constructor(private employeeService: EmployeeService,
-              private store: Store<fromApp.AppState>) { }
+  ciNumbers : any;
+  // newEmployee: Employee;
+  constructor(
+    private store: Store<AppState>
+  ) {}
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      ciNumber: new FormControl(null, [Validators.required, this.forbbidenCIs.bind(this)]),
-      name: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
-      lastname: new FormControl(null, [Validators.required, Validators.pattern('[a-zA-Z ]*')]),
+      ciNumber: new FormControl(null, [
+        Validators.required,
+        this.forbbidenCIs.bind(this)
+      ]),
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.pattern("[a-zA-Z ]*")
+      ]),
+      lastname: new FormControl(null, [
+        Validators.required,
+        Validators.pattern("[a-zA-Z ]*")
+      ]),
       charge: new FormControl(null, Validators.required)
-    })
+    });
 
-    // LOAD EMPLOYEE TO THE FORM
-    this.subscription = this.employeeService.startedEditing.subscribe(
-      (index: number) => {
-        this.editedUserIndex = index;
+    this.store.select("employment").subscribe(data => {
+      if (data.editedEmployeeIndex > -1) {
+        this.editedUser = data.editedEmployee;
         this.editMode = true;
-        this.editedUser = this.employeeService.getEmployee(index);
         this.registerForm.setValue({
           name: this.editedUser.name,
           lastname: this.editedUser.lastname,
           ciNumber: this.editedUser.ciNumber,
           charge: this.editedUser.charge
         });
+      } else {
+        this.editMode = false;
       }
-    );
+    });
   }
   onSubmit() {
-    // console.log(this.registerForm);
-    this.submitted = true;
-
-    // NOT NECESSARY FOR REACTIVE FORMS
-    // const formValueName = this.registerForm.value.name;
-    // const formValueLastName = this.registerForm.value.lastname;
-    // const formValueCharge = this.registerForm.value.charge;
-    // this.employeeUser = new Employee(formValueName, formValueLastName,formValueCharge);
-
+    const ciNumberForm = this.registerForm.value.ciNumber.toString();
+    const nameForm = this.registerForm.value.name;
+    const lastnameForm =  this.registerForm.value.lastname;
+    const chargeForm = this.registerForm.value.charge;
+    const newEmployee = new Employee(nameForm,lastnameForm,ciNumberForm,chargeForm);
     if (this.editMode) {
-      this.store.dispatch(new EmploymentActions.UpdateEmployee({index: this.editedUserIndex, updatedEmployee: this.registerForm.value}));
-      // this.employeeService.updateEmployee(this.editedUserIndex, this.registerForm.value );
-      // this.registerForm.reset();
+      this.store.dispatch(
+        new EmploymentActions.UpdateEmployee({ employee: newEmployee })
+      );
     } else {
-      this.store.dispatch(new EmploymentActions.AddEmployee(this.registerForm.value));
-
-      // this.employeeService.addEmployee(this.registerForm.value);
+      this.store.dispatch(
+        new EmploymentActions.AddEmployee({ employee: newEmployee })
+        );
+        console.log(newEmployee);
     }
-    this.editMode = false;
-    this.registerForm.reset();
+    this.onClear();
   }
   onClear() {
     this.registerForm.reset();
     this.editMode = false;
   }
   onDelete() {
-    this.store.dispatch(new EmploymentActions.DeleteEmployee(this.editedUserIndex));
-    // this.employeeService.removeEmployee(this.editedUserIndex);
+    this.store.dispatch(
+      new EmploymentActions.DeleteEmployee(this.editedUserIndex)
+    );
     this.onClear();
   }
 
-  forbbidenCIs(control: FormControl): {[s: string]: boolean} {
-    if (this.employeeService.getEmployeeCIs().indexOf(control.value) !== -1) {
-      return {CIrepeated: true};
+  forbbidenCIs(control: FormControl): { [s: string]: boolean } {
+    this.store.pipe(select(employeesCI)).subscribe(data => this.ciNumbers = data);
+
+    if (this.ciNumbers.indexOf(control.value) !== -1) {
+      return { CIrepeated: true };
     }
     return null;
   }

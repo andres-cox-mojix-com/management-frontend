@@ -23,9 +23,14 @@
         </tr>
       </thead>
       <tbody>
+        <!-- <tr
+          style="cursor: pointer;"
+          *ngFor="let employee of (employeesUserTry | async); let i = index"
+          (click)="onEditUser(i)"
+        > -->
         <tr
           style="cursor: pointer;"
-          *ngFor="let employee of employees; let i = index"
+          *ngFor="let employee of (employmentState | async); let i = index"
           (click)="onEditUser(i)"
         >
           <th scope="row">{{ i + 1 }}</th>

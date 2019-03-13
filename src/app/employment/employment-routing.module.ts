@@ -8,13 +8,10 @@ import { EmploymentCustomizeComponent } from './employment-customize/employment-
 import { AuthGuard } from './../auth/auth-guard.service';
 
 const employmentRoutes: Routes = [
-  { path: '', component: EmploymentComponent },
+  { path: '', component: EmploymentComponent},
   { path: 'list', component: EmploymentListComponent },
   { path: 'edit', component: EmploymentEditComponent},
   { path: 'customize', component: EmploymentCustomizeComponent, canActivate: [AuthGuard]},
-  // { path: 'customize', component: CustomizeComponent,children:[
-  //   { path:'showlist', component: EmploymentListComponent}
-  // ]},
 ]
 
 @NgModule({

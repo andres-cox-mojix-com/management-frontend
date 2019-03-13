@@ -1,10 +1,11 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
+import { Observable } from "rxjs";
 import { Employee } from "../../shared/employee.model";
-import { EmployeeService } from "../../shared/employee.service";
-import { Subscription, Observable } from "rxjs";
-import { Store } from '@ngrx/store';
 
-import * as fromApp from '../../store/app.reducers';
+import { Store, select } from '@ngrx/store';
+import { AppState } from './../../store/state/app.state';
+import { employeesList, filterEmployees } from 'src/app/store/selectors/employment.selectors';
+import * as EmploymentActions from '../../store/actions/employment.actions';
 
 
 @Component({
@@ -12,52 +13,25 @@ import * as fromApp from '../../store/app.reducers';
   templateUrl: "./employment-list.component.html",
   styleUrls: ["./employment-list.component.css"]
 })
-export class EmploymentListComponent implements OnInit, OnDestroy {
-  employees: Employee[];
-  employmentState: Observable<{employees: Employee[]}>;
-  state: Observable<{employees: Employee[]}>;
+export class EmploymentListComponent implements OnInit {
+  employmentState: Observable<Employee[]>;
 
-
-  // private subscription: Subscription;
-
-  constructor(private employeeService: EmployeeService,
-              private store: Store<fromApp.AppState>) {}
-              // private store: Store<{employment: {employees: Employee[]}}>) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    // this.employees = this.employeeService.getEmployees();
-    // this.subscription = this.employeeService.employeeChanged.subscribe(
-    //   (employees: Employee[]) => {
-    //     this.employees = employees;
-    //   }
-    // );
-    // this.employmentState = this.store.select('employment');
-    this.store.select('employment').subscribe(stateEmployee => { this.employees = stateEmployee.employees});
-    // console.log(this.employmentState);
-
+    this.employmentState = this.store.pipe(select(employeesList));
   }
+
   onEditUser(index: number) {
-    this.employeeService.startedEditing.next(index);
+    this.store.dispatch(new EmploymentActions.StartEdit(index));
   }
 
-  searchEmployee($event) {
-    console.log("i am searching");
+  searchEmployee($event: any) {
     const keyword = $event.target.value;
     if (keyword !== '') {
-      this.employees = this.employees.filter(result => {
-        return (
-          result.ciNumber.toLocaleLowerCase().match(keyword.toLocaleLowerCase()) ||
-          result.name.toLocaleLowerCase().match(keyword.toLocaleLowerCase()) ||
-          result.lastname.toLocaleLowerCase().match(keyword.toLocaleLowerCase()) ||
-          result.charge.toLocaleLowerCase().match(keyword.toLocaleLowerCase())
-          );
-        });
+      this.employmentState = this.store.pipe(select(filterEmployees, {keyword: $event.target.value}));
     } else if (keyword === '') {
       this.ngOnInit();
     }
-  }
-
-  ngOnDestroy() {
-    // this.subscription.unsubscribe();
   }
 }

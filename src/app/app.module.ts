@@ -1,27 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { environment } from '../environments/environment';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 
-import { AuthGuard } from './auth/auth-guard.service';
-import { AuthService } from './auth/auth.service';
-import { EmployeeService } from './shared/employee.service';
-import { DataStorageService } from './shared/data-storage.service';
+import { environment } from '../environments/environment';
+import { AuthInterceptor } from './shared/auth.interceptors';
 
 import { AuthModule } from './auth/auth.module';
 import { AppRoutingModule } from './app-routing.module';
 import { EmploymentModule } from './employment/employment.module';
 
 import { StoreModule } from '@ngrx/store';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { AuthEffects } from './store/effects/auth.effects';
+import { appReducers } from './store/reducers/app.reducers';
+import { EmploymentEffects } from './store/effects/employment.effects';
 
-import { reducers } from './store/app.reducers';
-import { employmentReducer } from './employment/store/employment.reducers';
 
 @NgModule({
   declarations: [
@@ -30,21 +29,19 @@ import { employmentReducer } from './employment/store/employment.reducers';
     ErrorPageComponent
   ],
   imports: [
-    HttpModule,
     BrowserModule,
     EmploymentModule,
+    HttpClientModule,
     AuthModule,
     AppRoutingModule,
-    // StoreModule.forRoot(reducers, { metaReducers }),
-    // StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
-    // StoreModule.forRoot(reducers),
-    // StoreModule.forRoot({employment: employmentReducer}),
-
-    // StoreRouterConnectingModule,
+    StoreModule.forRoot(appReducers),
+    EffectsModule.forRoot([AuthEffects,EmploymentEffects]),
+    StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : []
   ],
-  
-  providers: [EmployeeService, DataStorageService, AuthService, AuthGuard],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
