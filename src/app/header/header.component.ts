@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { SigninComponent } from './../auth/signin/signin.component';
 
 import { Observable } from 'rxjs';
 
@@ -16,10 +18,19 @@ import * as EmploymentActions from './../store/actions/employment.actions';
 export class HeaderComponent implements OnInit {
   authState: Observable<AuthState>;
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>,
+              private dialog: MatDialog) { }
 
   ngOnInit() {
     this.authState = this.store.select('auth');
+  }
+
+  login(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "400px";
+    this.dialog.open(SigninComponent,dialogConfig);
   }
 
   onSaveData(){

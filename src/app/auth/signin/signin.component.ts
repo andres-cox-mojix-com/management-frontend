@@ -1,3 +1,4 @@
+import { MatDialogRef } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
@@ -12,7 +13,8 @@ import * as AuthActions from '../../store/actions/auth.actions';
 })
 export class SigninComponent implements OnInit {
 
-  constructor(private store: Store<AppState>) { }
+  constructor(private store: Store<AppState>,
+              public dialogRef: MatDialogRef<SigninComponent>) { }
 
   ngOnInit() {
   }
@@ -21,5 +23,9 @@ export class SigninComponent implements OnInit {
       const email = form.value.email;
       const password = form.value.password;
       this.store.dispatch(new AuthActions.TrySignin({username: email, password: password}));
+      this.dialogRef.close();
+  }
+  onCloseDialog(){
+      this.dialogRef.close();
   }
 }

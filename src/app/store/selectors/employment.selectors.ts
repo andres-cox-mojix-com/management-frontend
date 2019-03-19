@@ -10,17 +10,21 @@ export const filterEmployees = createSelector(
   (state: EmploymentState, props: any) => state.employees
   .filter((employee: Employee)  => {
     return (
-      employee.ciNumber.match(props.keyword) ||
+      employee.cinumber.match(props.keyword) ||
       employee.name.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
       employee.lastname.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
-      employee.charge.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase())
+      employee.birthdate.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
+      employee.address.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
+      employee.phone.match(props.keyword) ||
+      employee.role.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
+      employee.profession.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase())
       );
     })
 );
 
 export const employeesCI = createSelector(
   selectEmployees,
-  (state: EmploymentState) => state.employees.map((employees)=> +employees.ciNumber)
+  (state: EmploymentState) => state.employees.map((employees)=> +employees.cinumber)
 );
 
 export const employeesList = createSelector(

@@ -1,57 +1,99 @@
-<div class="row ">
-  <div class="col-xs-12 col-sm-12 col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
-      <h2 class="bd-title text-center" style="padding-top: 20px;">
-        Table of Employees
-      </h2>
-    <div class="col-lg-8 col-lg-offset-2">
-        <input
-        class="form-control" style="margin-bottom: 0.4em;"
-        type="text"
-        placeholder="Search"
-        aria-label="Search"
-        (input)="searchEmployee($event)"
-      />
+<div class="container">
+  <br />
+  <div class="row">
+    <div class="col">
+      <h3 class="bd-title">
+        Employees
+      </h3>
     </div>
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
+
+    <div class="col-md-auto">
+      <div class="input-group md-form form-sm form-2 pl-0">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Search"
+          aria-label="Search"
+          (input)="searchEmployee($event)"
+        />
+        <div class="input-group-append">
+          <span class="input-group-text lime lighten-2"
+            ><i class="fa fa-search text-grey" aria-hidden="true"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-auto">
+      <button class="btn btn-dark" (click)="onCreate()">
+        + Add Employee
+      </button>
+    </div>
+  </div>
+  <br />
+  <br>
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-borderless table-hover">
+        <thead>
+          <th scope="col" class="text-nowrap">NAMES</th>
           <th scope="col">CI</th>
-          <th scope="col">Name</th>
-          <th scope="col">Lastname</th>
-          <th scope="col">Charge</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- <tr
+          <th scope="col">BIRTHDATE</th>
+          <th scope="col">ADDRESS</th>
+          <th scope="col">PHONE</th>
+          <th scope="col">ROLE</th>
+          <th scope="col">PROFESSION</th>
+          <ng-template [ngIf]="(authState | async).authenticated">
+            <th scope="col" class="text-center"  >MANAGE</th>
+          </ng-template>
+        </thead>
+        <tbody>
+          <tr
           style="cursor: pointer;"
-          *ngFor="let employee of (employeesUserTry | async); let i = index"
-          (click)="onEditUser(i)"
-        > -->
-        <tr
-          style="cursor: pointer;"
-          *ngFor="let employee of (employmentState | async); let i = index"
-          (click)="onEditUser(i)"
-        >
-          <th scope="row">{{ i + 1 }}</th>
-          <td class="text-right">
-            <a> {{ employee.ciNumber }}</a>
-          </td>
-          <td>
-            <a> {{ employee.name }}</a>
-          </td>
-          <td>
-            <a>
-              {{ employee.lastname }}
-            </a>
-          </td>
-          <td>
-            <a>
-              {{ employee.charge }}
-            </a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            *ngFor="let employee of (employmentState | async); let i = index"
+            >
+            <td class="text-nowrap">
+              {{ employee.name }} {{ employee.lastname }}
+            </td>
+            <td class="text-nowrap">
+              {{ employee.cinumber }}
+            </td>
+            <td>
+              {{ employee.birthdate }}
+            </td>
+            <td>
+              {{ employee.address }}
+            </td>
+            <td>
+              {{ employee.phone }}
+            </td>
+            <td>
+              {{ employee.role }}
+            </td>
+            <td>
+              {{ employee.profession}}
+            </td>
+          <ng-template [ngIf]="(authState | async).authenticated">
+              <td class="text-nowrap" >
+                <button
+                  class="btn btn-link btn-sm"
+                  style="cursor: pointer; color:#7b7b7b;"
+                  (click)="onEdit(i)"
+                >
+                  <i class="fa fa-edit fa-2x"></i>
+                </button>
+                <button
+                  class="btn btn-link btn-sm"
+                  style="cursor: pointer; color:#7b7b7b;"
+                  (click)="onDelete(i)"
+                >
+                  <i class="fa fa-trash fa-2x"></i>
+                </button>
+              </td>
+            </ng-template>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

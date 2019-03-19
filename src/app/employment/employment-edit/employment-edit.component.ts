@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { MatDialogRef } from '@angular/material';
 
 import { Employee } from "../../shared/employee.model";
 
@@ -7,6 +8,7 @@ import { Store, select } from "@ngrx/store";
 import { AppState } from "src/app/store/state/app.state";
 import { employeesCI } from './../../store/selectors/employment.selectors';
 import * as EmploymentActions from "../../store/actions/employment.actions";
+
 
 @Component({
   selector: "app-employment-edit",
@@ -20,17 +22,14 @@ export class EmploymentEditComponent implements OnInit {
   editMode = false;
 
   ciNumbers : any;
-  // newEmployee: Employee;
+
   constructor(
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    public dialogRef: MatDialogRef<EmploymentEditComponent>
   ) {}
 
   ngOnInit() {
     this.registerForm = new FormGroup({
-      ciNumber: new FormControl(null, [
-        Validators.required,
-        this.forbbidenCIs.bind(this)
-      ]),
       name: new FormControl(null, [
         Validators.required,
         Validators.pattern("[a-zA-Z ]*")
@@ -39,7 +38,26 @@ export class EmploymentEditComponent implements OnInit {
         Validators.required,
         Validators.pattern("[a-zA-Z ]*")
       ]),
-      charge: new FormControl(null, Validators.required)
+      cinumber: new FormControl(null, [
+        Validators.required,
+        Validators.pattern("^[1-9]+[0-9]*$"),
+        this.forbbidenCIs.bind(this)
+      ]),
+      birthdate: new FormControl(null, [
+        Validators.required,
+      ]),
+      address: new FormControl(null, [
+        Validators.required,
+      ]),
+      phone: new FormControl(null, [
+        Validators.required,
+        Validators.pattern("^[1-9]+[0-9]*$"),
+      ]),
+      role: new FormControl(null, Validators.required),
+      profession: new FormControl(null, [
+        Validators.required,
+        Validators.pattern("[a-zA-Z ]*")
+      ]),
     });
 
     this.store.select("employment").subscribe(data => {
@@ -49,8 +67,12 @@ export class EmploymentEditComponent implements OnInit {
         this.registerForm.setValue({
           name: this.editedUser.name,
           lastname: this.editedUser.lastname,
-          ciNumber: this.editedUser.ciNumber,
-          charge: this.editedUser.charge
+          cinumber: this.editedUser.cinumber,
+          birthdate: this.editedUser.birthdate,
+          address: this.editedUser.address,
+          phone: this.editedUser.phone,
+          role: this.editedUser.role,
+          profession: this.editedUser.profession
         });
       } else {
         this.editMode = false;
@@ -58,11 +80,26 @@ export class EmploymentEditComponent implements OnInit {
     });
   }
   onSubmit() {
-    const ciNumberForm = this.registerForm.value.ciNumber.toString();
     const nameForm = this.registerForm.value.name;
-    const lastnameForm =  this.registerForm.value.lastname;
-    const chargeForm = this.registerForm.value.charge;
-    const newEmployee = new Employee(nameForm,lastnameForm,ciNumberForm,chargeForm);
+    const lastnameForm  =  this.registerForm.value.lastname;
+    const cinumberForm = this.registerForm.value.cinumber.toString();
+      const month = this.registerForm.value.birthdate.split("-", 3)[1];
+      const day = this.registerForm.value.birthdate.split("-", 3)[2];
+      const year = this.registerForm.value.birthdate.split("-", 3)[0];
+    const birthdateForm = month + "/" + day + "/" + year;
+    const addressForm  = this.registerForm.value.address;
+    const phoneForm =  this.registerForm.value.phone.toString();
+    const roleForm = this.registerForm.value.role;
+    const professionForm  = this.registerForm.value.profession;
+    const newEmployee  = new Employee(nameForm,
+                                    lastnameForm,
+                                    cinumberForm,
+                                    birthdateForm,
+                                    addressForm,
+                                    phoneForm,
+                                    roleForm,
+                                    professionForm);
+    console.log(newEmployee);
     if (this.editMode) {
       this.store.dispatch(
         new EmploymentActions.UpdateEmployee({ employee: newEmployee })
@@ -73,6 +110,7 @@ export class EmploymentEditComponent implements OnInit {
         );
         console.log(newEmployee);
     }
+    this.dialogRef.close();
     this.onClear();
   }
   onClear() {
@@ -84,6 +122,9 @@ export class EmploymentEditComponent implements OnInit {
       new EmploymentActions.DeleteEmployee(this.editedUserIndex)
     );
     this.onClear();
+  }
+  onCloseDialog(){
+    this.dialogRef.close();
   }
 
   forbbidenCIs(control: FormControl): { [s: string]: boolean } {

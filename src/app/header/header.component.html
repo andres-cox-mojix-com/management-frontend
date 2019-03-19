@@ -1,52 +1,66 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark">
-  <a class="navbar-brand" routerLink="">Employment</a>
+<nav class="navbar navbar-expand navbar-light">
+  <a class="navbar-brand" routerLink="">CodeRoad</a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item" routerLinkActive="active">
-        <a
-          routerLink="customize"
-          class="nav-link"
-          *ngIf="(authState | async).authenticated"
-          >Configure</a
-        >
-      </li>
     </ul>
     <ul class="navbar-nav navbar-right">
       <ng-template [ngIf]="!(authState | async).authenticated">
         <li class="nav-item" routerLinkActive="router-link-active">
-          <a routerLink="/signup" class="nav-link">Sign Up</a>
-          <!-- <a [routerLink]="['/signup']" class="nav-link">Sign Up</a> -->
-        </li>
-        <li class="nav-item" routerLinkActive="router-link-active">
-          <a [routerLink]="['/signin']" class="nav-link">Login</a>
+          <button
+            (click)="login()"
+            class="btn btn-sm align-middle btn-outline-secondary"
+          >
+            Admin
+          </button>
         </li>
       </ng-template>
       <ng-template [ngIf]="(authState | async).authenticated">
-        <li
-          class="nav-item"
-          routerLinkActive="router-link-active"
-        >
+        <li class="nav-item">
           <a style="cursor: pointer;" class="nav-link" (click)="onSaveData()"
-            >Save Data</a
-          >
+          ><i class="fa fa-save fa-1x"></i> Save Data</a>
         </li>
-        <li
-          class="nav-item"
-          routerLinkActive="router-link-active"
-        >
+        <li class="nav-item">
           <a style="cursor: pointer;" class="nav-link" (click)="onFetchData()"
-            >Fetch Data</a
+            ><i class="fa fa-folder-open fa-1x"></i> Fetch Data</a
           >
         </li>
-        <li class="nav-item" routerLinkActive="router-link-active">
-          <a
-            style="cursor: pointer;"
-            class="nav-link"
+        <button
+            routerLinkActive="router-link-active"
+            class="btn btn-sm align-middle btn-outline-secondary"
             (click)="onLogout()"
-            >Logout</a
           >
-        </li>
+          Logout
+          </button>
+
       </ng-template>
     </ul>
   </div>
 </nav>
+<br />
+<nav class="navbar navbar-expand navbar-light">
+  <button
+    class="navbar-toggler mr-2"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbar"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse collapse" id="navbar">
+    <ul class="navbar-nav justify-content-center d-flex flex-fill">
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+          <i class="fa fa-home"></i> Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']"  routerLinkActive="router-link-active">
+          <i class="fa fa-users"></i> Employees</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [routerLink]="['/']"  routerLinkActive="router-link-active">
+          <i class="fa fa-sitemap"></i> Assigments</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<br />
