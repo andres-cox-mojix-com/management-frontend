@@ -9,7 +9,7 @@ import { AuthGuard } from './../auth/auth-guard.service';
 const employmentRoutes: Routes = [
   { path: '', component: EmploymentComponent},
   { path: 'list', component: EmploymentListComponent },
-  { path: 'edit', component: EmploymentEditComponent},
+  { path: 'edit', component: EmploymentEditComponent },
 ]
 
 @NgModule({

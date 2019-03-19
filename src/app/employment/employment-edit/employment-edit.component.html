@@ -1,19 +1,19 @@
 <div class="container">
   <div class="row">
-      <div class="col">
-  <h2 class="bd-title">Setup</h2>
-      </div>
-      <div class="col text-right">
-        <button
-        class="btn btn-link btn-sm"
-        style="cursor: pointer; color:#7b7b7b;"
-        (click)="onCloseDialog()"
-        >
-        <i class="fa fa-window-close fa-2x"></i>
-      </button>
-      </div>
+    <div class="col">
+      <h2 class="bd-title">Setup</h2>
     </div>
-    <br>
+    <div class="col text-right">
+      <button
+      class="btn btn-link btn-sm"
+      style="cursor: pointer; color:#7b7b7b; padding:0em;"
+      (click)="onCloseDialog()"
+      >
+      <i class="fa fa-window-close fa-2x"></i>
+    </button>
+    </div>
+  </div>
+  <br>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="row">
       <div class="col form-group">
@@ -153,11 +153,8 @@
           <div class="row">
             <label for="role">Role:</label>
             <select id="role" class="form-control" formControlName="role">
-              <option value="Accountant">Accountant</option>
-              <option value="Economist">Economist</option>
               <option value="Designer">Designer</option>
               <option value="Programmer">Programmer</option>
-              <option value="Photographer">Photographer</option>
             </select>
             <span
               *ngIf="

@@ -1,5 +1,5 @@
 import { MatDialogRef } from '@angular/material';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { Store } from '@ngrx/store';
@@ -12,7 +12,19 @@ import * as AuthActions from '../../store/actions/auth.actions';
   styleUrls: ['./signin.component.css']
 })
 export class SigninComponent implements OnInit {
+  @ViewChild('f') signupForm: NgForm;
 
+  defaultQuestion = 'pet';
+  answer = "";
+  genders = ['male', 'female'];
+  submitted = false;
+  user = {
+    username: '',
+    email: '',
+    secretQuestion: '',
+    answer: '',
+    gender: ''
+  }
   constructor(private store: Store<AppState>,
               public dialogRef: MatDialogRef<SigninComponent>) { }
 
