@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { from } from 'rxjs';
-import { map, tap, switchMap, mergeMap } from 'rxjs/operators';
+import { from, Observable } from 'rxjs';
+import { map, tap, switchMap, mergeMap, take } from 'rxjs/operators';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as firebase from 'firebase';
@@ -43,7 +43,10 @@ export class AuthEffects {
         return action.payload;
       })
       , switchMap((authData: { username: string, password: string }) => {
-        return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password));
+        return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password).catch((err) => {
+          alert('Incorrect email or password');
+          return Observable.throw(err)
+      }));
       })
       , switchMap(() => {
         return from(firebase.auth().currentUser.getIdToken());
@@ -60,6 +63,10 @@ export class AuthEffects {
           }
         ];
     })
+    // , catchError((err, caught) => {
+    //   console.log(err);
+    //   return caught;
+    // })
   );
 
   @Effect({dispatch: false})

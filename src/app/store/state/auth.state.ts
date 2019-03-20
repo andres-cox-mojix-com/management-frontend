@@ -1,6 +1,6 @@
 export interface AuthState {
-  token: string,
-  authenticated: boolean;
+  token: string;
+  authenticated: boolean
 }
 
 export const initialAuthState: AuthState = {

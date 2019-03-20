@@ -61,14 +61,22 @@ export class EmploymentEditComponent implements OnInit {
     });
 
     this.store.select("employment").subscribe(data => {
+
       if (data.editedEmployeeIndex > -1) {
         this.editedUser = data.editedEmployee;
         this.editMode = true;
+
+        const month = this.editedUser.birthdate.split("/", 3)[1];
+        const year = this.editedUser.birthdate.split("/", 3)[2];
+        const day = this.editedUser.birthdate.split("/", 3)[0];
+        const birthdateFixed = year + "-" + day + "-" + month;
+        console.log(birthdateFixed);
         this.registerForm.setValue({
           name: this.editedUser.name,
           lastname: this.editedUser.lastname,
           cinumber: this.editedUser.cinumber,
-          birthdate: this.editedUser.birthdate,
+
+          birthdate: birthdateFixed,
           address: this.editedUser.address,
           phone: this.editedUser.phone,
           role: this.editedUser.role,
