@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { from, Observable } from 'rxjs';
-import { map, tap, switchMap, mergeMap, take } from 'rxjs/operators';
+import { map, tap, switchMap, mergeMap, take, catchError } from 'rxjs/operators';
 
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import * as firebase from 'firebase';
@@ -62,11 +62,10 @@ export class AuthEffects {
             payload: token
           }
         ];
+    }), catchError((err, caught) => {
+      console.log(err);
+      return caught;
     })
-    // , catchError((err, caught) => {
-    //   console.log(err);
-    //   return caught;
-    // })
   );
 
   @Effect({dispatch: false})
