@@ -6,7 +6,6 @@ export const AuthReducer = (
   action: AuthActions.AuthActions
   ): AuthState => {
   switch (action.type){
-    case (AuthActions.SIGNUP):
     case (AuthActions.SIGNIN):
       return {
         ...state,

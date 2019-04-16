@@ -22,7 +22,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-auto">
+    <div *ngIf="(authState | async).authenticated" class="col-md-auto">
       <button class="btn btn-dark" (click)="onCreate()">
         + Add Employee
       </button>

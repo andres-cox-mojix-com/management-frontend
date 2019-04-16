@@ -1,5 +1,4 @@
 import { Employee } from './../../shared/employee.model';
-import { LiteralPrimitive } from '@angular/compiler';
 
 export interface EmploymentState {
   employees: Employee[];

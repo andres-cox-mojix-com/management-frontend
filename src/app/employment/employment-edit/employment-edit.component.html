@@ -16,7 +16,7 @@
   <br>
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="row">
-      <div class="col form-group">
+      <div class="col">
         <div class="container">
           <div class="row">
             <label for="name">Name:</label>
@@ -82,7 +82,6 @@
               </small>
             </span>
           </div>
-
           <div class="row">
             <label for="birthdate">Birthdate:</label>
             <input
@@ -108,7 +107,7 @@
         </div>
       </div>
 
-      <div class="col form-group">
+      <div class="col">
         <div class="container">
           <div class="row">
             <label for="address">Address:</label>
@@ -191,27 +190,20 @@
         </div>
       </div>
     </div>
-      <div class="row">
-        <div class="btn-group col-xs-12 col-sm-12 ">
-          <button
-            class="btn btn-dark"
-            type="submit"
-            [disabled]="!registerForm.valid"
-          >
-            {{ editMode ? "Update" : "Add" }}
-          </button>
-          <button class="btn btn-primary" type="button" (click)="onClear()">
-            Clear
-          </button>
-          <button
-            class="btn btn-danger"
-            type="button"
-            (click)="onDelete()"
-            *ngIf="editMode"
-          >
-            Delete
-          </button>
-        </div>
+    <br>
+    <div class="row">
+      <div class="btn-group col-xs-12 col-sm-12 ">
+        <button
+          class="btn btn-dark"
+          type="submit"
+          [disabled]="!registerForm.valid"
+        >
+          {{ editMode ? "Update" : "Add" }}
+        </button>
+        <button class="btn btn-primary" type="button" (click)="onClear()">
+          Clear
+        </button>
       </div>
+    </div>
   </form>
 </div>

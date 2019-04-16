@@ -3,10 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/store/state/app.state';
 import { AuthState } from './../../store/state/auth.state';
-import { selectAuthState } from 'src/app/store/selectors/auth.selectors';
 import * as AuthActions from '../../store/actions/auth.actions';
 
 @Component({
@@ -32,11 +31,11 @@ export class SigninComponent implements OnInit {
     const password = form.value.password;
     this.store.dispatch(new AuthActions.TrySignin({username: email, password: password}));
     this.store.select('auth').subscribe( s => {
-      this.failAuth = s.authenticated;
       if(s.authenticated){
         this.onCloseDialog();
       } else {
         this.signinForm.reset();
+        // this.failAuth = true;
       }
       console.log(s.authenticated)});
 

@@ -21,6 +21,8 @@ import { AuthEffects } from './store/effects/auth.effects';
 import { appReducers } from './store/reducers/app.reducers';
 import { EmploymentEffects } from './store/effects/employment.effects';
 
+import { MatDialogModule } from '@angular/material';
+
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { EmploymentEffects } from './store/effects/employment.effects';
     HttpClientModule,
     AuthModule,
     AppRoutingModule,
+    MatDialogModule,
     StoreModule.forRoot(appReducers),
     EffectsModule.forRoot([AuthEffects,EmploymentEffects]),
     StoreRouterConnectingModule,

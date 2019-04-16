@@ -70,6 +70,7 @@ export class EmploymentEditComponent implements OnInit {
         const year = this.editedUser.birthdate.split("/", 3)[2];
         const day = this.editedUser.birthdate.split("/", 3)[0];
         const birthdateFixed = year + "-" + day + "-" + month;
+        // console.log(this.editedUser.birthdate);
         console.log(birthdateFixed);
         this.registerForm.setValue({
           name: this.editedUser.name,
@@ -125,12 +126,7 @@ export class EmploymentEditComponent implements OnInit {
     this.registerForm.reset();
     this.editMode = false;
   }
-  onDelete() {
-    this.store.dispatch(
-      new EmploymentActions.DeleteEmployee(this.editedUserIndex)
-    );
-    this.onClear();
-  }
+
   onCloseDialog(){
     this.dialogRef.close();
   }
