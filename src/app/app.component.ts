@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit{
-  loadedFeature = 'employment'
+  loadedFeature = 'employment';
 
   ngOnInit(){
     firebase.initializeApp({
@@ -15,7 +15,6 @@ export class AppComponent implements OnInit{
       authDomain: "employees-database-3cdd1.firebaseapp.com"
     })
   }
-
   onNavigate(feature: string){
     this.loadedFeature = feature;
   }
