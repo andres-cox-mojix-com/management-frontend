@@ -108,7 +108,7 @@ export class EmploymentEditComponent implements OnInit {
                                     phoneForm,
                                     roleForm,
                                     professionForm);
-    console.log(newEmployee);
+    // console.log(newEmployee);
     if (this.editMode) {
       this.store.dispatch(
         new EmploymentActions.UpdateEmployee({ employee: newEmployee })
@@ -117,7 +117,7 @@ export class EmploymentEditComponent implements OnInit {
       this.store.dispatch(
         new EmploymentActions.AddEmployee({ employee: newEmployee })
         );
-        console.log(newEmployee);
+        // console.log(newEmployee);
     }
     this.dialogRef.close();
     this.onClear();

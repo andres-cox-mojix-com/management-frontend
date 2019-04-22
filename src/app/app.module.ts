@@ -23,9 +23,8 @@ import { EmploymentEffects } from "./store/effects/employment.effects";
 
 import { MatDialogModule } from "@angular/material";
 
-import { ApolloModule, APOLLO_OPTIONS } from "apollo-angular";
-import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
-import { InMemoryCache } from "apollo-cache-inmemory";
+import { NgrxCacheModule, apolloReducer } from 'apollo-angular-cache-ngrx';
+import { GraphQLModule } from "./graphql.module";
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorPageComponent],
@@ -33,34 +32,25 @@ import { InMemoryCache } from "apollo-cache-inmemory";
     BrowserModule,
     EmploymentModule,
     HttpClientModule,
-    ApolloModule,
-    HttpLinkModule,
     AuthModule,
     AppRoutingModule,
     MatDialogModule,
-    StoreModule.forRoot(appReducers),
+    StoreModule.forRoot({
+      ...appReducers, apollo: apolloReducer,
+    }),
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
+    // StoreModule.forFeature('employment', ),
     EffectsModule.forRoot([AuthEffects, EmploymentEffects]),
     StoreRouterConnectingModule,
-    !environment.production ? StoreDevtoolsModule.instrument() : []
+    GraphQLModule,
+    NgrxCacheModule
   ],
   providers: [
-    {
-      
-      // provide: [APOLLO_OPTIONS, HTTP_INTERCEPTORS],
-      // provide: HTTP_INTERCEPTORS,
-      // useClass: AuthInterceptor,
-      // multi: true,
-      provide: APOLLO_OPTIONS,
-      useFactory(httpLink: HttpLink) {
-        return {
-          cache: new InMemoryCache(),
-          link: httpLink.create({
-            uri: `http://localhost:4000/graphql`
-          })
-        }
-      },
-      deps: [HttpLink]
-    }
+    // {
+    //   provide: HTTP_INTERCEPTORS,
+    //   useClass: AuthInterceptor,
+    //   multi: true
+    // }
   ],
   bootstrap: [AppComponent]
 })
