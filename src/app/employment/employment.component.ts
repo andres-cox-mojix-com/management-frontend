@@ -1,23 +1,8 @@
-import { Store } from "@ngrx/store";
 import { Component, OnInit } from "@angular/core";
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
-import { Observable, Subscription } from "rxjs";
+import { GraphqlCrudService } from '../graphql/graphql-crud.service';
+import { Employee } from '../shared/employee.model';
 
-const getEmployeesState = gql`
-  query getEmployeesState {
-    getEmployees {
-      name
-      lastname
-      cinumber
-      birthdate
-      address
-      phone
-      role
-      profession
-    }
-  }
-`;
+
 @Component({
   selector: "app-employment",
   templateUrl: "./employment.component.html",
@@ -25,46 +10,15 @@ const getEmployeesState = gql`
 })
 export class EmploymentComponent implements OnInit {
   loading: boolean;
-  employeesFetch: any;
+  newEmployee =
+    new Employee("Juan", "Delgado", "8420651","02/15/1990", "45 St. Carlos Medinacelli, Sopocachi, LP", "78451238", "Designer", "Systems Engineering");
+    // new Employee("Luciana", "Diaz", "6524553","01/21/1988", "655 St. Carlos Medinacelli, San Miguel, LP", "79615302", "Programmer", "Systems Engineering"),
 
-  private querySubscription: Subscription;
-
-  // constructor(private apollo: Apollo, store: Store<any>) { }
-  constructor(private store: Store<any>, private apollo: Apollo) {
-    this.store = store;
-    apollo
-      .query({
-        query: gql`
-          query getEmployeesState {
-            getEmployees {
-              name
-              lastname
-              cinumber
-              birthdate
-              address
-              phone
-              role
-              profession
-            }
-          }
-        `
-      })
-      // .subscribe(data =>{ console.log(data)});
-  }
+  constructor(private graphqlCrudService: GraphqlCrudService) {}
   ngOnInit() {
-    // console.log(this.store);
   }
 
-  getEmployees() {
-    this.querySubscription = this.apollo
-      .watchQuery<any>({
-        query: getEmployeesState
-      })
-      .valueChanges.subscribe(({ data, loading }) => {
-        this.loading = loading;
-        this.employeesFetch = data.getEmployees;
-        console.log(data);
-        // console.log(this.employeesFetch);
-      });
+  addEmployeeTest() {
+    this.graphqlCrudService.addEmployee(this.newEmployee);
   }
 }

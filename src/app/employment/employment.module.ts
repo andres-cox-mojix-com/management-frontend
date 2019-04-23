@@ -19,7 +19,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ReactiveFormsModule,
     EmploymentRoutingModule,
     BrowserAnimationsModule
-]
+  ],
+  providers:[
+  ]
 
 })
 export class EmploymentModule {}

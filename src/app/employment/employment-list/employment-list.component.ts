@@ -25,6 +25,7 @@ export class EmploymentListComponent implements OnInit {
 
   ngOnInit() {
     this.authState = this.store.select('auth');
+    this.store.dispatch(new EmploymentActions.FetchEmployees());
     this.employmentState = this.store.pipe(select(employeesList));
   }
 

@@ -25,6 +25,7 @@ import { MatDialogModule } from "@angular/material";
 
 import { NgrxCacheModule, apolloReducer } from 'apollo-angular-cache-ngrx';
 import { GraphQLModule } from "./graphql.module";
+import { GraphqlCrudService } from './graphql/graphql-crud.service';
 
 @NgModule({
   declarations: [AppComponent, HeaderComponent, ErrorPageComponent],
@@ -46,6 +47,7 @@ import { GraphQLModule } from "./graphql.module";
     NgrxCacheModule
   ],
   providers: [
+    GraphqlCrudService
     // {
     //   provide: HTTP_INTERCEPTORS,
     //   useClass: AuthInterceptor,
