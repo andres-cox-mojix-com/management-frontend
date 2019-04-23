@@ -1,19 +1,13 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpRequest } from "@angular/common/http";
-
 import { switchMap, withLatestFrom, map } from "rxjs/operators";
-
-import { Employee } from "./../../shared/employee.model";
-
 import { Store } from "@ngrx/store";
 import { AppState } from "src/app/store/state/app.state";
 import { Actions, Effect, ofType } from "@ngrx/effects";
-// import { EmploymentState } from "./../state/employment.state";
-import * as EmploymentActions from "./../actions/employment.actions";
-import { employeesList } from "src/app/store/selectors/employment.selectors";
-import { Apollo } from "apollo-angular";
-import gql from "graphql-tag";
 import { GraphqlCrudService } from 'src/app/graphql/graphql-crud.service';
+import * as EmploymentActions from "./../actions/employment.actions";
+
+
 
 @Injectable()
 export class EmploymentEffects {
@@ -21,7 +15,6 @@ export class EmploymentEffects {
     private actions$: Actions,
     private httpClient: HttpClient,
     private store: Store<AppState>,
-    private apollo: Apollo,
     private graphqlCrudService: GraphqlCrudService
   ) { }
 
@@ -41,20 +34,34 @@ export class EmploymentEffects {
   );
 
   @Effect({ dispatch: false })
-  employeeStateTest = this.actions$.pipe(
+  newEmployee = this.actions$.pipe(
     ofType(EmploymentActions.ADD_EMPLOYEE),
     switchMap((action: EmploymentActions.AddEmployee) => {
-      const newEmp = this.graphqlCrudService.addEmployee(action.payload.employee);
-      return newEmp;
+      return this.graphqlCrudService.addEmployee(action.payload.employee);
     })
   );
-  
+
+  @Effect({ dispatch: false })
+  updateEmployee = this.actions$.pipe(
+    ofType(EmploymentActions.UPDATE_EMPLOYEE),
+    switchMap((action: EmploymentActions.UpdateEmployee) => {
+      return this.graphqlCrudService.updateEmployee(action.payload.employee);
+    })
+  );
+
+  @Effect({ dispatch: false })
+  deleteEmployee = this.actions$.pipe(
+    ofType(EmploymentActions.DELETE_EMPLOYEE),
+    switchMap((action: EmploymentActions.DeleteEmployee) => {
+      return this.graphqlCrudService.deleteEmployee(action.payload.ci);
+    })
+  );
+
   @Effect()
-  employees = this.actions$.pipe(
+  employeesState = this.actions$.pipe(
     ofType(EmploymentActions.FETCH_EMPLOYEES),
     switchMap((action: EmploymentActions.FetchEmployees) => {
-      const employeesGQL = this.graphqlCrudService.getEmployees();
-      return employeesGQL;
+      return this.graphqlCrudService.getEmployees();
     }),
     map(employees => {
       return {
@@ -63,34 +70,4 @@ export class EmploymentEffects {
       };
     })
   );
-  // @Effect()
-  // employees = this.actions$.pipe(
-  //   ofType(EmploymentActions.FETCH_EMPLOYEES),
-  //   switchMap((action: EmploymentActions.FetchEmployees) => {
-  //     const employeesGQL = this.apollo.query<any>({
-  //       query: gql`
-  //         query getEmployeesState {
-  //           getEmployees {
-  //             name
-  //             lastname
-  //             cinumber
-  //             birthdate
-  //             address
-  //             phone
-  //             role
-  //             profession
-  //           }
-  //         }
-  //       `
-  //     });
-  //     employeesGQL.subscribe(res => console.log(res.data.getEmployees));
-  //     return employeesGQL;
-  //   }),
-  //   map(employees => {
-  //     return {
-  //       type: EmploymentActions.SET_EMPLOYEES,
-  //       payload: employees.data.getEmployees
-  //     };
-  //   })
-  // );
 }

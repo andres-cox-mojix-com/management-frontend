@@ -15,8 +15,7 @@ export class EmploymentComponent implements OnInit {
     // new Employee("Luciana", "Diaz", "6524553","01/21/1988", "655 St. Carlos Medinacelli, San Miguel, LP", "79615302", "Programmer", "Systems Engineering"),
 
   constructor(private graphqlCrudService: GraphqlCrudService) {}
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   addEmployeeTest() {
     this.graphqlCrudService.addEmployee(this.newEmployee);

@@ -35,7 +35,7 @@ export const EmploymentReducer = (
       };
     case EmploymentActions.DELETE_EMPLOYEE:
       const oldEmployees = [...state.employees];
-      oldEmployees.splice(action.payload, 1);
+      oldEmployees.splice(action.payload.index, 1);
       return {
         ...state,
         employees: oldEmployees

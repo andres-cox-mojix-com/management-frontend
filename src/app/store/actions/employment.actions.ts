@@ -31,7 +31,7 @@ export class UpdateEmployee implements Action {
 export class DeleteEmployee implements Action {
   readonly type = DELETE_EMPLOYEE;
 
-  constructor(public payload: number){}
+  constructor(public payload: {index: number, ci: string}){}
 }
 
 export class StartEdit implements Action {

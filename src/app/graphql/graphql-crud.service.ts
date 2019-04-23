@@ -15,9 +15,6 @@ export class GraphqlCrudService {
       query: query.getEmployeesState,
       fetchPolicy: 'network-only'
     })
-      // .subscribe((data) => {
-      //   console.log(data);
-      // });
   }
 
   async getEmployeeCI(cinumber: string): Promise<any> {
@@ -47,7 +44,7 @@ export class GraphqlCrudService {
       }
     }).subscribe(({ data }) => {
       console.log('got data', data.addEmployee);
-      
+
     }, (error) => {
       console.log('there was an error sending the query', error);
     });
@@ -73,17 +70,13 @@ export class GraphqlCrudService {
     });
   }
 
-  async deleteEmployee(cinumber: string): Promise<any> {
+  deleteEmployee(cinumber: string){
     return this.apollo.mutate({
       mutation: mutation.deleteEmployee,
       variables: {
         cinumb: cinumber,
       }
-    }).subscribe(({ data }) => {
-      console.log('got data', data.deleteEmployee);
-    }, (error) => {
-      console.log('there was an error sending the query', error);
-    });
+    })
   }
- 
+
 }

@@ -57,9 +57,9 @@ export class EmploymentListComponent implements OnInit {
     dialogConfig.width = "600px";
     this.dialog.open(EmploymentEditComponent,dialogConfig);
   }
-  onDelete(index: number) {
+  onDelete(index: number, ci: string) {
     if(confirm('Are you sure to delete this record?')){
-      this.store.dispatch(new EmploymentActions.DeleteEmployee(index));
+      this.store.dispatch(new EmploymentActions.DeleteEmployee({ index, ci }));
     }
   }
 }
