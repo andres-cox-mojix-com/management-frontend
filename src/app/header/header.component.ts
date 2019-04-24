@@ -33,14 +33,6 @@ export class HeaderComponent implements OnInit {
     this.dialog.open(SigninComponent,dialogConfig);
   }
 
-  onSaveData(){
-    this.store.dispatch(new EmploymentActions.StoreEmployees());
-  }
-
-  onFetchData(){
-    this.store.dispatch(new EmploymentActions.FetchEmployees());
-  }
-
   onLogout(){
     this.store.dispatch(new AuthActions.Logout());
   }

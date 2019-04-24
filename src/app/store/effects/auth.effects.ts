@@ -15,34 +15,46 @@ export class AuthEffects {
   authSignin = this.actions$.pipe(
     ofType(AuthActions.TRY_SIGNIN),
     map((action: AuthActions.TrySignin) => {
-        return action.payload;
-      })
-      , switchMap((authData: { username: string, password: string }) => {
-        return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password).catch((err) => {
-          return Observable.throw(err)
+      return action.payload;
+    })
+    , switchMap((authData: { username: string, password: string }) => {
+      return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password).catch((err) => {
+        return Observable.throw(err)
       }));
-      })
-      , switchMap(() => {
-        return from(firebase.auth().currentUser.getIdToken());
-      })
-      , mergeMap((token: string) => {
-        this.router.navigate(['/']);
-        return [
-          {
-            type: AuthActions.SIGNIN
-          },
-          {
-            type: AuthActions.SET_TOKEN,
-            payload: token
-          }
-        ];
-    }), catchError((err, caught) => {
+    })
+    , switchMap(() => {
+      return from(firebase.auth().currentUser.getIdToken());
+    })
+    , mergeMap((token: string) => {
+      this.router.navigate(['/']);
+      return [
+        {
+          type: AuthActions.SIGNIN
+        },
+        {
+          type: AuthActions.SET_TOKEN,
+          payload: token
+        },
+        {
+          type: AuthActions.FAIL_AUTH,
+          payload: false
+        }
+      ];
+    })
+    , catchError((err, caught) => {
       console.log(err);
-      return caught;
+      // return caught 
+      return [
+        {caught},
+        {
+          type: AuthActions.FAIL_AUTH,
+          payload: true
+        },
+      ];
     })
   );
 
-  @Effect({dispatch: false})
+  @Effect({ dispatch: false })
   authLogout = this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
     tap(() => {
@@ -50,6 +62,6 @@ export class AuthEffects {
     })
   );
 
-  constructor(private actions$: Actions, private router: Router) {
-  }
+  constructor(private actions$: Actions, private router: Router) { }
+
 }

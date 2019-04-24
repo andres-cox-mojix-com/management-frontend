@@ -7,7 +7,6 @@ import { HeaderComponent } from "./header/header.component";
 import { ErrorPageComponent } from "./error-page/error-page.component";
 
 import { environment } from "../environments/environment";
-import { AuthInterceptor } from "./shared/auth.interceptors";
 
 import { AuthModule } from "./auth/auth.module";
 import { AppRoutingModule } from "./app-routing.module";
@@ -48,11 +47,6 @@ import { GraphqlCrudService } from './graphql/graphql-crud.service';
   ],
   providers: [
     GraphqlCrudService
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi: true
-    // }
   ],
   bootstrap: [AppComponent]
 })

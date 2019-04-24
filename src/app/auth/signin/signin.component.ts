@@ -23,23 +23,24 @@ export class SigninComponent implements OnInit {
 
   ngOnInit() {
     this.authState =this.store.select('auth')
-
   }
 
   onSignIn(form: NgForm){
     const email = form.value.email;
     const password = form.value.password;
     this.store.dispatch(new AuthActions.TrySignin({username: email, password: password}));
-    this.store.select('auth').subscribe( s => {
-      if(s.authenticated){
+    this.store.select('auth').subscribe( auth => {
+      if(auth.authenticated){
         this.onCloseDialog();
       } else {
         this.signinForm.reset();
         // this.failAuth = true;
       }
-      console.log(s.authenticated)});
-
+      console.log("auth " + auth.authenticated);
+      console.log("failAuth " + auth.failAuth);
+    });
   }
+
   onCloseDialog(){
     this.dialogRef.close();
   }

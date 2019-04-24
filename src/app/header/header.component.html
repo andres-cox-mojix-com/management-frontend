@@ -15,15 +15,6 @@
         </li>
       </ng-template>
       <ng-template [ngIf]="(authState | async).authenticated">
-        <li class="nav-item">
-          <a style="cursor: pointer;" class="nav-link" (click)="onSaveData()"
-          ><i class="fa fa-save fa-1x"></i> Save Data</a>
-        </li>
-        <li class="nav-item">
-          <a style="cursor: pointer;" class="nav-link" (click)="onFetchData()"
-            ><i class="fa fa-folder-open fa-1x"></i> Fetch Data</a
-          >
-        </li>
         <button
             routerLinkActive="router-link-active"
             class="btn btn-sm align-middle btn-outline-secondary"

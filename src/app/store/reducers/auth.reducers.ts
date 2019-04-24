@@ -4,8 +4,8 @@ import * as AuthActions from '../actions/auth.actions';
 export const AuthReducer = (
   state = initialAuthState,
   action: AuthActions.AuthActions
-  ): AuthState => {
-  switch (action.type){
+): AuthState => {
+  switch (action.type) {
     case (AuthActions.SIGNIN):
       return {
         ...state,
@@ -21,6 +21,11 @@ export const AuthReducer = (
       return {
         ...state,
         token: action.payload
+      };
+    case (AuthActions.FAIL_AUTH):
+      return {
+        ...state,
+        failAuth: action.payload
       };
     default:
       return state;
