@@ -14,12 +14,12 @@ mutation addEmployee(
   addEmployee(
     name: $name
     lastname: $lastname
-    cinumber: $cinumber 
-    birthdate: $birthdate 
-    address: $address 
-    phone: $phone 
-    role: $role 
-    profession: $profession 
+    cinumber: $cinumber
+    birthdate: $birthdate
+    address: $address
+    phone: $phone
+    role: $role
+    profession: $profession
   ) {
     name
     lastname
@@ -34,6 +34,7 @@ mutation addEmployee(
 `;
 export const updateEmployee = gql`
   mutation updateEmployee (
+      $id: String!
       $name: String
       $lastname: String
       $cinumber: String!
@@ -44,6 +45,7 @@ export const updateEmployee = gql`
       $profession: String
   )  {
     updateEmployee(
+      id: $id
       name: $name
       lastname: $lastname
       cinumber: $cinumber

@@ -4,6 +4,7 @@ import gql from "graphql-tag";
 export const getEmployeesState = gql`
   query getEmployeesState {
     getEmployees {
+      id
       name
       lastname
       cinumber

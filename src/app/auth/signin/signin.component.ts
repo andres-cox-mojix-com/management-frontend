@@ -34,10 +34,7 @@ export class SigninComponent implements OnInit {
         this.onCloseDialog();
       } else {
         this.signinForm.reset();
-        // this.failAuth = true;
       }
-      console.log("auth " + auth.authenticated);
-      console.log("failAuth " + auth.failAuth);
     });
   }
 

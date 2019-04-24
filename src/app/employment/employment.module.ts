@@ -7,12 +7,14 @@ import { EmploymentListComponent } from './employment-list/employment-list.compo
 import { EmploymentEditComponent } from './employment-edit/employment-edit.component';
 import { EmploymentRoutingModule } from './employment-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { WarningComponent } from './warning/warning.component';
 
 @NgModule({
   declarations:[
     EmploymentEditComponent,
     EmploymentListComponent,
-    EmploymentComponent
+    EmploymentComponent,
+    WarningComponent
   ],
   imports:[
     CommonModule,

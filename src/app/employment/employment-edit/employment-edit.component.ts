@@ -20,8 +20,7 @@ export class EmploymentEditComponent implements OnInit {
   editedUser: Employee;
   editedUserIndex: number;
   editMode = false;
-
-  ciNumbers : any;
+  ciNumbers: any;
 
   constructor(
     private store: Store<AppState>,
@@ -71,7 +70,7 @@ export class EmploymentEditComponent implements OnInit {
         const day = this.editedUser.birthdate.split("/", 3)[0];
         const birthdateFixed = year + "-" + day + "-" + month;
         // console.log(this.editedUser.birthdate);
-        console.log(birthdateFixed);
+        // console.log(birthdateFixed);
         this.registerForm.setValue({
           name: this.editedUser.name,
           lastname: this.editedUser.lastname,
@@ -100,15 +99,15 @@ export class EmploymentEditComponent implements OnInit {
     const phoneForm =  this.registerForm.value.phone.toString();
     const roleForm = this.registerForm.value.role;
     const professionForm  = this.registerForm.value.profession;
-    const newEmployee  = new Employee(nameForm,
-                                    lastnameForm,
-                                    cinumberForm,
-                                    birthdateForm,
-                                    addressForm,
-                                    phoneForm,
-                                    roleForm,
-                                    professionForm);
-    // console.log(newEmployee);
+    const newEmployee  = new Employee(this.editedUser.id,
+                                      nameForm,
+                                      lastnameForm,
+                                      cinumberForm,
+                                      birthdateForm,
+                                      addressForm,
+                                      phoneForm,
+                                      roleForm,
+                                      professionForm);
     if (this.editMode) {
       this.store.dispatch(
         new EmploymentActions.UpdateEmployee({ employee: newEmployee })
@@ -117,7 +116,6 @@ export class EmploymentEditComponent implements OnInit {
       this.store.dispatch(
         new EmploymentActions.AddEmployee({ employee: newEmployee })
         );
-        // console.log(newEmployee);
     }
     this.dialogRef.close();
     this.onClear();

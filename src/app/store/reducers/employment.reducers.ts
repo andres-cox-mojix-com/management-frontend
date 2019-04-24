@@ -41,11 +41,11 @@ export const EmploymentReducer = (
         employees: oldEmployees
       };
     case EmploymentActions.START_EDIT:
-      const editedEmployee = { ...state.employees[action.payload] };
+      const editedEmployee = { ...state.employees[action.payload.index] };
       return {
         ...state,
         editedEmployee: editedEmployee,
-        editedEmployeeIndex: action.payload
+        editedEmployeeIndex: action.payload.index
       };
     case EmploymentActions.STOP_EDIT:
       return {

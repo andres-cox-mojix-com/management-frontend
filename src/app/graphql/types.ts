@@ -1,4 +1,5 @@
 type Employee = {
+    id: string;
     name: string;
     lastname: string;
     cinumber: string;

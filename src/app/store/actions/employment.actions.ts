@@ -37,7 +37,7 @@ export class DeleteEmployee implements Action {
 export class StartEdit implements Action {
   readonly type = START_EDIT;
 
-  constructor(public payload: number) {}
+  constructor(public payload: {index: number, id: any}) {}
 }
 export class StopEdit implements Action {
   readonly type = STOP_EDIT;

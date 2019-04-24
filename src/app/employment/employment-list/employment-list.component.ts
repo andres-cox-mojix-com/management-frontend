@@ -5,6 +5,7 @@ import { Observable } from "rxjs";
 import { Employee } from "../../shared/employee.model";
 
 import { EmploymentEditComponent } from './../employment-edit/employment-edit.component';
+import { WarningComponent } from './../warning/warning.component';
 import { Store, select } from '@ngrx/store';
 import { AppState } from './../../store/state/app.state';
 import { employeesList, filterEmployees } from 'src/app/store/selectors/employment.selectors';
@@ -29,10 +30,6 @@ export class EmploymentListComponent implements OnInit {
     this.employmentState = this.store.pipe(select(employeesList));
   }
 
-  onEditUser(index: number) {
-    this.store.dispatch(new EmploymentActions.StartEdit(index));
-  }
-
   searchEmployee($event: any) {
     const keyword = $event.target.value;
     if (keyword !== '') {
@@ -49,8 +46,8 @@ export class EmploymentListComponent implements OnInit {
     dialogConfig.width = "600px";
     this.dialog.open(EmploymentEditComponent,dialogConfig);
   }
-  onEdit(index: number){
-    this.store.dispatch(new EmploymentActions.StartEdit(index));
+  onEdit(index: number, id){
+    this.store.dispatch(new EmploymentActions.StartEdit({index, id}));
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -58,8 +55,11 @@ export class EmploymentListComponent implements OnInit {
     this.dialog.open(EmploymentEditComponent,dialogConfig);
   }
   onDelete(index: number, ci: string) {
-    if(confirm('Are you sure to delete this record?')){
-      this.store.dispatch(new EmploymentActions.DeleteEmployee({ index, ci }));
-    }
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.data = { index: index, ci: ci };
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "400px";
+    this.dialog.open(WarningComponent, dialogConfig);
   }
 }

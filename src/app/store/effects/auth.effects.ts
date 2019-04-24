@@ -1,32 +1,49 @@
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { AppState } from 'src/app/store/state/app.state';
+import { Store } from '@ngrx/store';
+import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { from, Observable } from 'rxjs';
-import { map, tap, switchMap, mergeMap, take, catchError } from 'rxjs/operators';
+import { from, Observable } from "rxjs";
+import {
+  map,
+  tap,
+  switchMap,
+  mergeMap,
+  catchError
+} from "rxjs/operators";
 
-import { Actions, Effect, ofType } from '@ngrx/effects';
-import * as firebase from 'firebase';
-import * as AuthActions from '../actions/auth.actions';
+import { Actions, Effect, ofType } from "@ngrx/effects";
+import * as firebase from "firebase";
+import * as AuthActions from "../actions/auth.actions";
 
 @Injectable()
 export class AuthEffects {
+
+  constructor(
+    private actions$: Actions,
+    private router: Router,
+    private store: Store<AppState>
+  ) {}
 
   @Effect()
   authSignin = this.actions$.pipe(
     ofType(AuthActions.TRY_SIGNIN),
     map((action: AuthActions.TrySignin) => {
       return action.payload;
-    })
-    , switchMap((authData: { username: string, password: string }) => {
-      return from(firebase.auth().signInWithEmailAndPassword(authData.username, authData.password).catch((err) => {
-        return Observable.throw(err)
-      }));
-    })
-    , switchMap(() => {
+    }),
+    switchMap((authData: { username: string; password: string }) => {
+      return from(firebase.auth()
+          .signInWithEmailAndPassword(authData.username, authData.password)
+          .catch(err => {
+            return Observable.throw(err);
+          })
+      );
+    }),
+    switchMap(() => {
       return from(firebase.auth().currentUser.getIdToken());
-    })
-    , mergeMap((token: string) => {
-      this.router.navigate(['/']);
+    }),
+    mergeMap((token: string) => {
+      this.router.navigate(["/"]);
       return [
         {
           type: AuthActions.SIGNIN
@@ -40,17 +57,11 @@ export class AuthEffects {
           payload: false
         }
       ];
-    })
-    , catchError((err, caught) => {
+    }),
+    catchError((err, caught) => {
       console.log(err);
-      // return caught 
-      return [
-        {caught},
-        {
-          type: AuthActions.FAIL_AUTH,
-          payload: true
-        },
-      ];
+      this.store.dispatch(new AuthActions.FailAuth(true));
+      return caught;
     })
   );
 
@@ -58,10 +69,8 @@ export class AuthEffects {
   authLogout = this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
     tap(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(["/"]);
     })
   );
-
-  constructor(private actions$: Actions, private router: Router) { }
 
 }

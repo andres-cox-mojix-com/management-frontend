@@ -14,7 +14,7 @@
     </div>
   </div>
   <br>
-  <span class="text-danger text-center" *ngIf="(authState | async).authenticated" >
+  <span class="text-danger text-center" *ngIf="(authState | async).failAuth" >
       Incorrect Email or Password
   </span>
   <br>

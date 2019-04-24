@@ -5,7 +5,6 @@ import { SigninComponent } from './auth/signin/signin.component';
 
 const routes: Routes = [
   { path: 'signin', component: SigninComponent },
-
   { path: 'not-found', component: ErrorPageComponent, data: {message: 'Page not found!'} },
   { path: '**', redirectTo: '/not-found'}
 

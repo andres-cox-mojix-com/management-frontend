@@ -50,10 +50,11 @@ export class GraphqlCrudService {
     });
   }
 
-  async updateEmployee(employee: Employee): Promise<any> {
+  async updateEmployee(employee): Promise<any> {
     return this.apollo.mutate({
       mutation: mutation.updateEmployee,
       variables: {
+        id: employee.id,
         name: employee.name,
         lastname: employee.lastname,
         cinumber: employee.cinumber,

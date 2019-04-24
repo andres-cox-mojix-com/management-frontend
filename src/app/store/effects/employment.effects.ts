@@ -1,9 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
 import { switchMap, map } from "rxjs/operators";
-import { Store } from "@ngrx/store";
 import { Actions, Effect, ofType } from "@ngrx/effects";
-import { AppState } from "src/app/store/state/app.state";
 import { GraphqlCrudService } from 'src/app/graphql/graphql-crud.service';
 import * as EmploymentActions from "./../actions/employment.actions";
 
@@ -13,8 +10,6 @@ import * as EmploymentActions from "./../actions/employment.actions";
 export class EmploymentEffects {
   constructor(
     private actions$: Actions,
-    private httpClient: HttpClient,
-    private store: Store<AppState>,
     private graphqlCrudService: GraphqlCrudService
   ) { }
 

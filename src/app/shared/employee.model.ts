@@ -1,5 +1,6 @@
 export class Employee {
-  constructor(public name: string,
+  constructor(public id: string,
+              public name: string,
               public lastname: string,
               public cinumber: string,
               public birthdate: string,
