@@ -1,17 +1,8 @@
-## STAGE 1: Build ###
+FROM node:11.6.0-alpine AS builder
+COPY . ./employment
+WORKDIR /employment
+RUN npm i
+RUN $(npm bin)/ng build --prod
 
-FROM node:10
-
-WORKDIR /usr/src/app
-
-RUN npm install -g @angular/cli
-
-COPY package*.json ./
-
-RUN npm install
-
-COPY . .
-
-CMD npm start
-
-
+FROM nginx:1.15.8-alpine
+COPY --from=builder /employment/dist/employment/ /usr/share/nginx/html

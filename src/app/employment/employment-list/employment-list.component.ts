@@ -47,7 +47,11 @@ export class EmploymentListComponent implements OnInit {
     this.dialog.open(EmploymentEditComponent,dialogConfig);
   }
   onEdit(index: number, id){
-    this.store.dispatch(new EmploymentActions.StartEdit({index, id}));
+    console.log('index: ' + index);
+    console.log('id: ' + id);
+    const aux = (id != null) ? id : '';
+    // console.log('aux ' + aux)
+    this.store.dispatch(new EmploymentActions.StartEdit({index: index, id: aux}));
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;

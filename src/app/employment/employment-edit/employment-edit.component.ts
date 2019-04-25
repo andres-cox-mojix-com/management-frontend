@@ -21,6 +21,7 @@ export class EmploymentEditComponent implements OnInit {
   editedUserIndex: number;
   editMode = false;
   ciNumbers: any;
+  idForm: any;
 
   constructor(
     private store: Store<AppState>,
@@ -64,7 +65,7 @@ export class EmploymentEditComponent implements OnInit {
       if (data.editedEmployeeIndex > -1) {
         this.editedUser = data.editedEmployee;
         this.editMode = true;
-
+        // console.log(data.editedEmployee);
         const month = this.editedUser.birthdate.split("/", 3)[1];
         const year = this.editedUser.birthdate.split("/", 3)[2];
         const day = this.editedUser.birthdate.split("/", 3)[0];
@@ -82,8 +83,11 @@ export class EmploymentEditComponent implements OnInit {
           role: this.editedUser.role,
           profession: this.editedUser.profession
         });
+        this.idForm = this.editedUser.id;
+
       } else {
         this.editMode = false;
+        this.idForm = '';
       }
     });
   }
@@ -99,7 +103,7 @@ export class EmploymentEditComponent implements OnInit {
     const phoneForm =  this.registerForm.value.phone.toString();
     const roleForm = this.registerForm.value.role;
     const professionForm  = this.registerForm.value.profession;
-    const newEmployee  = new Employee(this.editedUser.id,
+    const newEmployee  = new Employee(this.idForm,
                                       nameForm,
                                       lastnameForm,
                                       cinumberForm,
@@ -122,11 +126,12 @@ export class EmploymentEditComponent implements OnInit {
   }
   onClear() {
     this.registerForm.reset();
-    this.editMode = false;
   }
 
   onCloseDialog(){
+    this.store.dispatch(new EmploymentActions.StopEdit);
     this.dialogRef.close();
+    this.editMode = false;
   }
 
   forbbidenCIs(control: FormControl): { [s: string]: boolean } {

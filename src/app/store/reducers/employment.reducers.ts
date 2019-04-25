@@ -8,6 +8,10 @@ export const EmploymentReducer = (
   state = initialEmploymentState,
   action: EmploymentActions.EmploymentActions
 ): EmploymentState => {
+  // export function EmploymentReducer (
+  //   state = initialEmploymentState,
+  //   action: EmploymentActions.EmploymentActions
+  // ) {
   switch (action.type) {
     case EmploymentActions.SET_EMPLOYEES:
       return {
@@ -41,12 +45,18 @@ export const EmploymentReducer = (
         employees: oldEmployees
       };
     case EmploymentActions.START_EDIT:
-      const editedEmployee = { ...state.employees[action.payload.index] };
-      return {
-        ...state,
-        editedEmployee: editedEmployee,
-        editedEmployeeIndex: action.payload.index
-      };
+      for (let i of state.employees) {
+        if(i.id === action.payload.id){
+          const editedEmp = i;
+          return {
+            ...state,
+            editedEmployee: editedEmp,
+            editedEmployeeIndex: action.payload.index+1
+          };
+        }
+      }
+      // const editedEmployee = { ...state.employees[action.payload.index] };
+      // console.log(editedEmployee);
     case EmploymentActions.STOP_EDIT:
       return {
         ...state,
