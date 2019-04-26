@@ -5,10 +5,6 @@ export const AuthReducer = (
   state = initialAuthState,
   action: AuthActions.AuthActions
 ): AuthState => {
-// export function AuthReducer (
-//   state = initialAuthState,
-//   action: AuthActions.AuthActions
-// ){
   switch (action.type) {
     case (AuthActions.SIGNIN):
       return {

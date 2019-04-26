@@ -20,9 +20,9 @@ import * as EmploymentActions from '../../store/actions/employment.actions';
 export class EmploymentListComponent implements OnInit {
   employmentState: Observable<Employee[]>;
   authState: Observable<AuthState>;
-
+  keyword;
   constructor(private store: Store<AppState>,
-              private dialog: MatDialog) {}
+    private dialog: MatDialog) { }
 
   ngOnInit() {
     this.authState = this.store.select('auth');
@@ -31,10 +31,10 @@ export class EmploymentListComponent implements OnInit {
   }
 
   searchEmployee($event: any) {
-    const keyword = $event.target.value;
-    if (keyword !== '') {
-      this.employmentState = this.store.pipe(select(filterEmployees, {keyword: $event.target.value}));
-    } else if (keyword === '') {
+    this.keyword = $event.target.value;
+    if (this.keyword !== '') {
+      this.employmentState = this.store.pipe(select(filterEmployees, { keyword: $event.target.value }));
+    } else if (this.keyword === '') {
       this.ngOnInit();
     }
   }
@@ -44,26 +44,34 @@ export class EmploymentListComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "600px";
-    this.dialog.open(EmploymentEditComponent,dialogConfig);
+    const dialogRef = this.dialog.open(EmploymentEditComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
+        this.employmentState = this.store.pipe(select(filterEmployees, { keyword: this.keyword }));
+      }
+    );
   }
-  onEdit(index: number, id){
-    console.log('index: ' + index);
-    console.log('id: ' + id);
-    const aux = (id != null) ? id : '';
-    // console.log('aux ' + aux)
-    this.store.dispatch(new EmploymentActions.StartEdit({index: index, id: aux}));
+  onEdit(index: number, id: string) {
+    this.store.dispatch(new EmploymentActions.StartEdit({ index: index, id: id }));
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "600px";
-    this.dialog.open(EmploymentEditComponent,dialogConfig);
+    const dialogRef = this.dialog.open(EmploymentEditComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
+        this.employmentState = this.store.pipe(select(filterEmployees, { keyword: this.keyword }));
+      }
+    );
   }
-  onDelete(index: number, ci: string) {
+  onDelete(index: number, id: string) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.data = { index: index, ci: ci };
+    dialogConfig.data = { index: index, id: id };
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = "400px";
-    this.dialog.open(WarningComponent, dialogConfig);
+    const dialogRef = this.dialog.open(WarningComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(() => {
+        this.employmentState = this.store.pipe(select(filterEmployees, { keyword: this.keyword }));
+      }
+    );
   }
 }

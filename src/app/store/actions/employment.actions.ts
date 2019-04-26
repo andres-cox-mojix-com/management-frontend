@@ -31,13 +31,13 @@ export class UpdateEmployee implements Action {
 export class DeleteEmployee implements Action {
   readonly type = DELETE_EMPLOYEE;
 
-  constructor(public payload: {index: number, ci: string}){}
+  constructor(public payload: {index: number, id: string}){}
 }
 
 export class StartEdit implements Action {
   readonly type = START_EDIT;
 
-  constructor(public payload: {index: number, id: any}) {}
+  constructor(public payload: {index: number, id: string}) {}
 }
 export class StopEdit implements Action {
   readonly type = STOP_EDIT;

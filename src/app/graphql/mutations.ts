@@ -67,9 +67,9 @@ export const updateEmployee = gql`
   }
 `;
 export const deleteEmployee = gql`
-  mutation deleteEmployee($cinumb: String!){
-    deleteEmployee(cinumber: $cinumb){
-      cinumber
+  mutation deleteEmployee($id: String!){
+    deleteEmployee(id: $id){
+      id
     }
   }
 `;

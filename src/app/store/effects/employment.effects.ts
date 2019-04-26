@@ -33,7 +33,7 @@ export class EmploymentEffects {
   deleteEmployee = this.actions$.pipe(
     ofType(EmploymentActions.DELETE_EMPLOYEE),
     switchMap((action: EmploymentActions.DeleteEmployee) => {
-      return this.graphqlCrudService.deleteEmployee(action.payload.ci);
+      return this.graphqlCrudService.deleteEmployee(action.payload.id);
     })
   );
 

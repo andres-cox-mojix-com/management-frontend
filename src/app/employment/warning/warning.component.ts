@@ -26,7 +26,7 @@ export class WarningComponent implements OnInit {
     this.store.dispatch(
       new EmploymentActions.DeleteEmployee({
         index: this.data.index,
-        ci: this.data.ci
+        id: this.data.id
       })
     );
     this.dialogRef.close();

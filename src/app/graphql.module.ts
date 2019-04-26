@@ -5,7 +5,7 @@ import { ApolloModule, Apollo } from 'apollo-angular';
 import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
 import { NgrxCache } from 'apollo-angular-cache-ngrx';
 
-const uri = 'http://localhost:4000/graphql';
+const uri = 'http://server:4000/graphql';
 export function createApollo(httpLink: HttpLink) {
   return {
     link: httpLink.create({uri}),

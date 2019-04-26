@@ -8,10 +8,6 @@ export const EmploymentReducer = (
   state = initialEmploymentState,
   action: EmploymentActions.EmploymentActions
 ): EmploymentState => {
-  // export function EmploymentReducer (
-  //   state = initialEmploymentState,
-  //   action: EmploymentActions.EmploymentActions
-  // ) {
   switch (action.type) {
     case EmploymentActions.SET_EMPLOYEES:
       return {
@@ -24,13 +20,18 @@ export const EmploymentReducer = (
         employees: [...state.employees, action.payload.employee]
       };
     case EmploymentActions.UPDATE_EMPLOYEE:
-      const employee = state.employees[state.editedEmployeeIndex];
-      const updatedEmployee = {
-        ...employee,
-        ...action.payload.employee
-      };
-      const employees = [...state.employees];
-      employees[state.editedEmployeeIndex] = updatedEmployee;
+      for (let emp of state.employees) {
+        if (emp.id === action.payload.employee.id) {
+          const employee = emp;
+          const updatedEmployee = {
+            ...employee,
+            ...action.payload.employee
+          };
+          var employees = [...state.employees];
+          const objIndex = employees.findIndex((obj => obj.id == emp.id));
+          employees[objIndex] = updatedEmployee;
+        }
+      }
       return {
         ...state,
         employees: employees,
@@ -39,24 +40,24 @@ export const EmploymentReducer = (
       };
     case EmploymentActions.DELETE_EMPLOYEE:
       const oldEmployees = [...state.employees];
-      oldEmployees.splice(action.payload.index, 1);
+      const objIndex = oldEmployees.findIndex((obj => obj.id == action.payload.id));
+      oldEmployees.splice(objIndex, 1);
       return {
         ...state,
         employees: oldEmployees
       };
     case EmploymentActions.START_EDIT:
-      for (let i of state.employees) {
-        if(i.id === action.payload.id){
-          const editedEmp = i;
+      for (let emp of state.employees) {
+        if (emp.id === action.payload.id) {
+          const editedEmp = emp;
           return {
             ...state,
             editedEmployee: editedEmp,
-            editedEmployeeIndex: action.payload.index+1
+            editedEmployeeId: editedEmp.id,
+            editedEmployeeIndex: action.payload.index
           };
         }
       }
-      // const editedEmployee = { ...state.employees[action.payload.index] };
-      // console.log(editedEmployee);
     case EmploymentActions.STOP_EDIT:
       return {
         ...state,

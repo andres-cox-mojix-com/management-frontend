@@ -43,7 +43,7 @@ export class GraphqlCrudService {
         profession: employee.profession
       }
     }).subscribe(({ data }) => {
-      console.log('got data', data.addEmployee);
+      // console.log('got data', data.addEmployee);
 
     }, (error) => {
       console.log('there was an error sending the query', error);
@@ -65,17 +65,17 @@ export class GraphqlCrudService {
         profession: employee.profession
       }
     }).subscribe(({ data }) => {
-      console.log('got data', data.updateEmployee);
+      // console.log('got data', data.updateEmployee);
     }, (error) => {
       console.log('there was an error sending the query', error);
     });
   }
 
-  deleteEmployee(cinumber: string){
+  deleteEmployee(id: string){
     return this.apollo.mutate({
       mutation: mutation.deleteEmployee,
       variables: {
-        cinumb: cinumber,
+        id: id,
       }
     })
   }

@@ -28,7 +28,7 @@
             id="email"
             class="form-control"
             ngModel name="email"
-            pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
             required #email="ngModel"
           />
           <span class="text-muted" *ngIf="!email.valid && email.touched" >
