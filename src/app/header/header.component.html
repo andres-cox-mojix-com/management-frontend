@@ -1,28 +1,26 @@
 <nav class="navbar navbar-expand navbar-light">
-  <a class="navbar-brand" routerLink="">Logo</a>
+  <a class="navbar-brand" routerLink="">Company Logo</a>
   <div class="collapse navbar-collapse">
-    <ul class="navbar-nav mr-auto">
-    </ul>
+    <ul class="navbar-nav mr-auto"></ul>
     <ul class="navbar-nav navbar-right">
       <ng-template [ngIf]="!(authState | async).authenticated">
         <li class="nav-item" routerLinkActive="router-link-active">
-          <button
-            (click)="login()"
-            class="btn btn-sm align-middle btn-outline-secondary"
-          >
-            Admin
+          <button (click)="signup()" class="btn btn-sm mr-2 btn-secondary">
+            Sign Up
+          </button>
+          <button (click)="login()" class="btn btn-sm btn-outline-secondary">
+            Sign In
           </button>
         </li>
       </ng-template>
       <ng-template [ngIf]="(authState | async).authenticated">
         <button
-            routerLinkActive="router-link-active"
-            class="btn btn-sm align-middle btn-outline-secondary"
-            (click)="onLogout()"
-          >
+          routerLinkActive="router-link-active"
+          class="btn btn-sm align-middle btn-outline-secondary"
+          (click)="onLogout()"
+        >
           Logout
-          </button>
-
+        </button>
       </ng-template>
     </ul>
   </div>
@@ -40,16 +38,31 @@
   <div class="navbar-collapse collapse" id="navbar">
     <ul class="navbar-nav justify-content-center d-flex flex-fill">
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
-          <i class="fa fa-home"></i> Home</a>
+        <a
+          class="nav-link"
+          [routerLink]="['/']"
+          routerLinkActive="router-link-active"
+        >
+          <i class="fa fa-home"></i> Home</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/']"  routerLinkActive="router-link-active">
-          <i class="fa fa-users"></i> Employees</a>
+        <a
+          class="nav-link"
+          [routerLink]="['/']"
+          routerLinkActive="router-link-active"
+        >
+          <i class="fa fa-users"></i> Employees</a
+        >
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/']"  routerLinkActive="router-link-active">
-          <i class="fa fa-sitemap"></i> Assignments</a>
+        <a
+          class="nav-link"
+          [routerLink]="['/']"
+          routerLinkActive="router-link-active"
+        >
+          <i class="fa fa-sitemap"></i> Assignments</a
+        >
       </li>
     </ul>
   </div>

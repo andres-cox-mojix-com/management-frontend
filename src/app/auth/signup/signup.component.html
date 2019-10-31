@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h2 class="bd-title">Sign Up</h2>
+    </div>
+    <div class="col text-right">
+      <button
+        class="btn btn-link btn-sm"
+        style="cursor: pointer; color:#7b7b7b; padding:0em;"
+        (click)="onCloseDialog()"
+      >
+        <i class="fa fa-window-close fa-2x"></i>
+      </button>
+    </div>
+  </div>
+  <span class="text-muted">And sign in to view admin operations</span>
+  <br />
+  <span class="text-danger text-center" *ngIf="(authState | async).failAuth">
+    Incorrect Email or Password
+  </span>
+  <br />
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+      <form (ngSubmit)="onSignUp(f)" #f="ngForm">
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            class="form-control"
+            ngModel
+            name="email"
+            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+            required
+            #email="ngModel"
+          />
+          <span class="text-muted" *ngIf="!email.valid && email.touched">
+            <small>
+              Please enter a valid email
+            </small>
+          </span>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            ngModel
+            class="form-control"
+            required
+            #password="ngModel"
+          />
+          <span class="text-muted" *ngIf="!password.valid && password.touched">
+            <small>
+              Please enter your password
+            </small>
+          </span>
+        </div>
+        <button class="btn btn-dark" [disabled]="f.invalid">Sing Up</button>
+      </form>
+    </div>
+  </div>
+</div>

@@ -3,9 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  uri: "http://localhost:4000/graphql"
 };
-
+// 'http://localhost:4000/graphql'
+// '/graphql' for deploy on server, node directory
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

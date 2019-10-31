@@ -5,15 +5,15 @@
     </div>
     <div class="col text-right">
       <button
-      class="btn btn-link btn-sm"
-      style="cursor: pointer; color:#7b7b7b; padding:0em;"
-      (click)="onCloseDialog()"
+        class="btn btn-link btn-sm"
+        style="cursor: pointer; color:#7b7b7b; padding:0em;"
+        (click)="onCloseDialog()"
       >
-      <i class="fa fa-window-close fa-2x"></i>
-    </button>
+        <i class="fa fa-window-close fa-2x"></i>
+      </button>
     </div>
   </div>
-  <br>
+  <br />
   <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" autocomplete="off">
     <div class="row">
       <div class="col">
@@ -60,7 +60,7 @@
           </div>
 
           <div class="row">
-            <label for="cinumber">CI:</label>
+            <label for="cinumber">DNI:</label>
             <input
               type="number"
               id="cinumber"
@@ -75,7 +75,7 @@
               class="text-muted"
             >
               <small *ngIf="registerForm.get('cinumber').errors['CIrepeated']">
-                This CI is Repeated
+                This DNI is Repeated
               </small>
               <small *ngIf="registerForm.get('cinumber').errors['required']">
                 This Field is Required
@@ -190,7 +190,7 @@
         </div>
       </div>
     </div>
-    <br>
+    <br />
     <div class="row">
       <div class="btn-group col-xs-12 col-sm-12 ">
         <button

@@ -1,41 +1,37 @@
-import { NgModule } from '@angular/core';
-import { InMemoryCache } from 'apollo-cache-inmemory';
+import { NgModule } from "@angular/core";
+import { InMemoryCache } from "apollo-cache-inmemory";
 
-import { ApolloModule, Apollo } from 'apollo-angular';
-import { HttpLinkModule, HttpLink } from 'apollo-angular-link-http';
-import { NgrxCache } from 'apollo-angular-cache-ngrx';
+import { ApolloModule, Apollo } from "apollo-angular";
+import { HttpLinkModule, HttpLink } from "apollo-angular-link-http";
+import { NgrxCache } from "apollo-angular-cache-ngrx";
+import { environment } from "src/environments/environment";
 
-const uri = 'http://localhost:4000/graphql';
+const uri = environment.uri;
 export function createApollo(httpLink: HttpLink) {
   return {
-    link: httpLink.create({uri}),
-    cache: new InMemoryCache(),
+    link: httpLink.create({ uri }),
+    cache: new InMemoryCache()
   };
 }
 
 @NgModule({
-  exports: [ApolloModule, HttpLinkModule],
-
+  exports: [ApolloModule, HttpLinkModule]
 })
 export class GraphQLModule {
-  constructor(
-    apollo: Apollo,
-    httpLink: HttpLink,
-    ngrxCache: NgrxCache
-  ) {
+  constructor(apollo: Apollo, httpLink: HttpLink, ngrxCache: NgrxCache) {
     // create Apollo
     apollo.create({
       link: httpLink.create({ uri }),
       cache: ngrxCache.create(),
       defaultOptions: {
         watchQuery: {
-          fetchPolicy: 'network-only',
-          errorPolicy: 'ignore',
+          fetchPolicy: "network-only",
+          errorPolicy: "ignore"
         },
         query: {
-          fetchPolicy: 'network-only',
-          errorPolicy: 'all',
-        },
+          fetchPolicy: "network-only",
+          errorPolicy: "all"
+        }
       }
     });
   }

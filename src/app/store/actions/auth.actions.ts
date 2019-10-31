@@ -1,19 +1,31 @@
 import { Action } from "@ngrx/store";
 
-export const TRY_SIGNIN = 'TRY_SIGNIN';
-export const SIGNIN = 'SIGNIN';
-export const LOGOUT = 'LOGOUT';
-export const SET_TOKEN = 'SET_TOKEN';
-export const FAIL_AUTH = 'FAIL_AUTH';
+export const TRY_SIGNIN = "TRY_SIGNIN";
+export const TRY_SIGNUP = "TRY_SIGNUP";
+export const SIGNIN = "SIGNIN";
+export const SIGNUP = "SIGNUP";
+export const LOGOUT = "LOGOUT";
+export const SET_TOKEN = "SET_TOKEN";
+export const FAIL_AUTH = "FAIL_AUTH";
 
 export class TrySignin implements Action {
   readonly type = TRY_SIGNIN;
 
-  constructor(public payload: {username: string, password: string}) {}
+  constructor(public payload: { username: string; password: string }) {}
+}
+
+export class TrySignup implements Action {
+  readonly type = TRY_SIGNUP;
+
+  constructor(public payload: { username: string; password: string }) {}
 }
 
 export class Signin implements Action {
   readonly type = SIGNIN;
+}
+
+export class Signup implements Action {
+  readonly type = SIGNUP;
 }
 
 export class Logout implements Action {
@@ -23,17 +35,19 @@ export class Logout implements Action {
 export class SetToken implements Action {
   readonly type = SET_TOKEN;
 
-  constructor(public payload: string){}
+  constructor(public payload: string) {}
 }
 
 export class FailAuth implements Action {
   readonly type = FAIL_AUTH;
 
-  constructor(public payload: boolean){}
+  constructor(public payload: boolean) {}
 }
 export type AuthActions =
-  Signin |
-  Logout |
-  SetToken |
-  FailAuth |
-  TrySignin;
+  | Signin
+  | Signup
+  | Logout
+  | SetToken
+  | FailAuth
+  | TrySignin
+  | TrySignup;

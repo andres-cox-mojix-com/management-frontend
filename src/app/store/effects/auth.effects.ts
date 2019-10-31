@@ -1,16 +1,10 @@
-import { AppState } from 'src/app/store/state/app.state';
-import { Store } from '@ngrx/store';
+import { AppState } from "src/app/store/state/app.state";
+import { Store } from "@ngrx/store";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 
 import { from, Observable } from "rxjs";
-import {
-  map,
-  tap,
-  switchMap,
-  mergeMap,
-  catchError
-} from "rxjs/operators";
+import { map, tap, switchMap, mergeMap, catchError } from "rxjs/operators";
 
 import { Actions, Effect, ofType } from "@ngrx/effects";
 import * as firebase from "firebase";
@@ -18,7 +12,6 @@ import * as AuthActions from "../actions/auth.actions";
 
 @Injectable()
 export class AuthEffects {
-
   constructor(
     private actions$: Actions,
     private router: Router,
@@ -32,7 +25,9 @@ export class AuthEffects {
       return action.payload;
     }),
     switchMap((authData: { username: string; password: string }) => {
-      return from(firebase.auth()
+      return from(
+        firebase
+          .auth()
           .signInWithEmailAndPassword(authData.username, authData.password)
           .catch(err => {
             return Observable.throw(err);
@@ -65,6 +60,35 @@ export class AuthEffects {
     })
   );
 
+  @Effect()
+  authSignup = this.actions$.pipe(
+    ofType(AuthActions.TRY_SIGNUP),
+    map((action: AuthActions.TrySignup) => {
+      return action.payload;
+    }),
+    switchMap((authData: { username: string; password: string }) => {
+      return from(
+        firebase
+          .auth()
+          .createUserWithEmailAndPassword(authData.username, authData.password)
+      );
+    }),
+    switchMap(() => {
+      return from(firebase.auth().currentUser.getIdToken());
+    }),
+    mergeMap((token: string) => {
+      return [
+        {
+          type: AuthActions.SIGNUP
+        },
+        {
+          type: AuthActions.SET_TOKEN,
+          payload: token
+        }
+      ];
+    })
+  );
+
   @Effect({ dispatch: false })
   authLogout = this.actions$.pipe(
     ofType(AuthActions.LOGOUT),
@@ -72,5 +96,4 @@ export class AuthEffects {
       this.router.navigate(["/"]);
     })
   );
-
 }

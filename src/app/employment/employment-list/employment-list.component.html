@@ -29,27 +29,27 @@
     </div>
   </div>
   <br />
-  <br>
+  <br />
   <div class="container">
     <div class="table-responsive">
       <table class="table table-borderless table-hover">
         <thead>
           <th scope="col" class="text-nowrap">NAMES</th>
-          <th scope="col">CI</th>
+          <th scope="col">DNI</th>
           <th scope="col">BIRTHDATE</th>
           <th scope="col">ADDRESS</th>
           <th scope="col">PHONE</th>
           <th scope="col">ROLE</th>
           <th scope="col">PROFESSION</th>
           <ng-template [ngIf]="(authState | async).authenticated">
-            <th scope="col" class="text-center"  >MANAGE</th>
+            <th scope="col" class="text-center">MANAGE</th>
           </ng-template>
         </thead>
         <tbody>
           <tr
-          style="cursor: pointer;"
-            *ngFor="let employee of (employmentState | async); let i = index"
-            >
+            style="cursor: pointer;"
+            *ngFor="let employee of employmentState | async; let i = index"
+          >
             <td class="text-nowrap">
               {{ employee.name }} {{ employee.lastname }}
             </td>
@@ -69,10 +69,10 @@
               {{ employee.role }}
             </td>
             <td>
-              {{ employee.profession}}
+              {{ employee.profession }}
             </td>
             <ng-template [ngIf]="(authState | async).authenticated">
-              <td class="text-nowrap" >
+              <td class="text-nowrap">
                 <button
                   class="btn btn-link btn-sm"
                   style="cursor: pointer; color:#7b7b7b;"
