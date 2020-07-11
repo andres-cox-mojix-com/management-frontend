@@ -50,7 +50,15 @@
             style="cursor: pointer;"
             *ngFor="let employee of employmentState | async; let i = index"
           >
+            <!-- <td class="text-nowrap" [innerHTML]="employee.name | match"> -->
             <td class="text-nowrap">
+              <!-- [ngStyle]="{
+                  backgroundColor: employee.name
+                    .toLocaleLowerCase()
+                    .match(this.keyword)
+                    ? 'white'
+                    : 'cyan'
+                }" -->
               {{ employee.name }} {{ employee.lastname }}
             </td>
             <td class="text-nowrap">

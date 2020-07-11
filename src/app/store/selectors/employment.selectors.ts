@@ -7,27 +7,48 @@ export const selectEmployees = (state: AppState) => state.employment;
 
 export const filterEmployees = createSelector(
   selectEmployees,
-  (state: EmploymentState, props: any) => state.employees
-  .filter((employee: Employee)  => {
-    return (
-      employee.cinumber.match(props.keyword) ||
-      employee.name.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
-      employee.lastname.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
-      employee.birthdate.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
-      employee.address.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
-      employee.phone.match(props.keyword) ||
-      employee.role.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase()) ||
-      employee.profession.toLocaleLowerCase().match(props.keyword.toLocaleLowerCase())
+  (state: EmploymentState, props: any) =>
+    state.employees.filter((employee: Employee) => {
+      return (
+        employee.cinumber.match(props.keyword) ||
+        employee.name
+          .toLocaleLowerCase()
+          .match(props.keyword.toLocaleLowerCase()) ||
+        employee.lastname
+          .toLocaleLowerCase()
+          .match(props.keyword.toLocaleLowerCase()) ||
+        employee.birthdate
+          .toLocaleLowerCase()
+          .match(props.keyword.toLocaleLowerCase()) ||
+        employee.address
+          .toLocaleLowerCase()
+          .match(props.keyword.toLocaleLowerCase()) ||
+        employee.phone.match(props.keyword) ||
+        employee.role
+          .toLocaleLowerCase()
+          .match(props.keyword.toLocaleLowerCase()) ||
+        employee.profession
+          .toLocaleLowerCase()
+          .match(props.keyword.toLocaleLowerCase())
       );
     })
 );
 
 export const employeesCI = createSelector(
   selectEmployees,
-  (state: EmploymentState) => state.employees.map((employees)=> +employees.cinumber)
+  (state: EmploymentState) =>
+    state.employees.map(employees => +employees.cinumber)
 );
 
 export const employeesList = createSelector(
   selectEmployees,
   (state: EmploymentState) => state.employees
+);
+
+export const employeesAvatar = createSelector(
+  selectEmployees,
+  (state: EmploymentState, cinums: any) =>
+    state.employees.filter((employee: Employee) => cinums.includes(employee.cinumber)).map(el => {
+      return `${el.name.charAt(0)}${el.lastname.charAt(0)}`
+    })
 );

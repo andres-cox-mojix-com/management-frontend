@@ -41,6 +41,12 @@ export class HeaderComponent implements OnInit {
     this.dialog.open(SignupComponent, dialogConfig);
   }
 
+  auth() {
+    this.store.select("auth").subscribe(auth => {
+      auth.authenticated = true;
+    });
+  }
+
   onLogout() {
     this.store.dispatch(new AuthActions.Logout());
   }

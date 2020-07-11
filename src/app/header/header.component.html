@@ -8,17 +8,17 @@
           <button (click)="signup()" class="btn btn-sm mr-2 btn-secondary">
             Sign Up
           </button>
-          <button (click)="login()" class="btn btn-sm btn-outline-secondary">
+          <button (click)="login()" class="btn btn-sm mr-2 btn-outline-secondary">
             Sign In
+          </button>
+          <button (click)="auth()" class="btn btn-sm btn-success">
+            Browse as Guest
           </button>
         </li>
       </ng-template>
       <ng-template [ngIf]="(authState | async).authenticated">
-        <button
-          routerLinkActive="router-link-active"
-          class="btn btn-sm align-middle btn-outline-secondary"
-          (click)="onLogout()"
-        >
+        <button routerLinkActive="router-link-active" class="btn btn-sm align-middle btn-outline-secondary"
+          (click)="onLogout()">
           Logout
         </button>
       </ng-template>
@@ -27,42 +27,22 @@
 </nav>
 <br />
 <nav class="navbar navbar-expand navbar-light">
-  <button
-    class="navbar-toggler mr-2"
-    type="button"
-    data-toggle="collapse"
-    data-target="#navbar"
-  >
+  <button class="navbar-toggler mr-2" type="button" data-toggle="collapse" data-target="#navbar">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="navbar-collapse collapse" id="navbar">
     <ul class="navbar-nav justify-content-center d-flex flex-fill">
       <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/']"
-          routerLinkActive="router-link-active"
-        >
-          <i class="fa fa-home"></i> Home</a
-        >
+        <a class="nav-link" [routerLink]="['/home']" routerLinkActive="router-link-active">
+          <i class="fa fa-home"></i> Home</a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/']"
-          routerLinkActive="router-link-active"
-        >
-          <i class="fa fa-users"></i> Employees</a
-        >
+        <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+          <i class="fa fa-users"></i> Employees</a>
       </li>
       <li class="nav-item">
-        <a
-          class="nav-link"
-          [routerLink]="['/']"
-          routerLinkActive="router-link-active"
-        >
-          <i class="fa fa-sitemap"></i> Assignments</a
-        >
+        <a class="nav-link" [routerLink]="['/assignments']" routerLinkActive="router-link-active">
+          <i class="fa fa-sitemap"></i> Assignments</a>
       </li>
     </ul>
   </div>

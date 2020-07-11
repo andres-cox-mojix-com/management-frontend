@@ -1,11 +1,13 @@
-.fa:hover{
-  color:black;
-
+.red {
+  color: red;
 }
-.col-md-auto, .col{
+.fa:hover {
+  color: black;
+}
+.col-md-auto,
+.col {
   margin: 0.2em;
 }
-div{
-  font-family: 'Times New Roman';
+div {
+  font-family: "Times New Roman";
 }
-

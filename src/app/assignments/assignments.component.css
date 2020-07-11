@@ -1,0 +1,10 @@
+.avatar {
+  /* background-color: cornflowerblue; */
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  font-size: 1.3rem;
+  line-height: 50px;
+  border-radius: 50%;
+  margin-right: 11px;
+}

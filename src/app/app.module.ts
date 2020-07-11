@@ -26,11 +26,12 @@ import { EmploymentEffects } from "./store/effects/employment.effects";
 import { MatDialogModule } from "@angular/material";
 
 import { NgrxCacheModule, apolloReducer } from 'apollo-angular-cache-ngrx';
-import { GraphQLModule } from "./graphql.module";
+import { GraphQLModule } from "./graphql/graphql.module";
 import { GraphqlCrudService } from './graphql/graphql-crud.service';
+import { HomeComponent } from './home/home.component';
 
 export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
-  return function(state, action) {
+  return function (state, action) {
     // console.log('state', state);
     // console.log('action', action);
 
@@ -39,7 +40,7 @@ export function debug(reducer: ActionReducer<any>): ActionReducer<any> {
 }
 export const metaReducers: MetaReducer<any>[] = [debug];
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, ErrorPageComponent],
+  declarations: [AppComponent, HeaderComponent, ErrorPageComponent, HomeComponent],
   imports: [
     BrowserModule,
     EmploymentModule,
@@ -62,4 +63,4 @@ export const metaReducers: MetaReducer<any>[] = [debug];
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
