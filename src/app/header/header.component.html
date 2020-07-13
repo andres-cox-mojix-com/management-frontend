@@ -11,9 +11,9 @@
           <button (click)="login()" class="btn btn-sm mr-2 btn-outline-secondary">
             Sign In
           </button>
-          <button (click)="auth()" class="btn btn-sm btn-success">
+          <!-- <button (click)="auth()" class="btn btn-sm btn-success">
             Browse as Guest
-          </button>
+          </button> -->
         </li>
       </ng-template>
       <ng-template [ngIf]="(authState | async).authenticated">
@@ -37,7 +37,7 @@
           <i class="fa fa-home"></i> Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/']" routerLinkActive="router-link-active">
+        <a class="nav-link" [routerLink]="['/employment']" routerLinkActive="router-link-active">
           <i class="fa fa-users"></i> Employees</a>
       </li>
       <li class="nav-item">

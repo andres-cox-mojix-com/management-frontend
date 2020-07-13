@@ -30,6 +30,22 @@ export class AssignmentsComponent implements OnInit {
       "A CMS app for a travel blog",
       ["3456585", "1987414"],
       []
+    ),
+    new Project(
+      "kvmkc123",
+      "restaurant-web",
+      "Tomas Page",
+      "A single page aplication with delivery service",
+      ["3456585", "7945656"],
+      []
+    ),
+    new Project(
+      "fjandj43",
+      "hotel-web",
+      "Rachel Owen",
+      "A web with booking service and places to discover",
+      ["6845123", "1987414"],
+      []
     )
   ];
   avatars: string[] = [];
@@ -38,13 +54,13 @@ export class AssignmentsComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch(new EmploymentActions.FetchEmployees());
-    this.store
-      .pipe(select(employeesAvatar, this.projects[0].employees))
-      .subscribe(res => this.projects[0].avatars = res);
 
-    this.store
-      .pipe(select(employeesAvatar, this.projects[1].employees))
-      .subscribe(res => this.projects[1].avatars = res);
+    for (let i = 0; i < this.projects.length; i++) {
+      this.store
+        .pipe(select(employeesAvatar, this.projects[i].employees))
+        .subscribe(res => this.projects[i].avatars = res);
+    }
+
   }
 
   loadEmployeesAvatar() { }
